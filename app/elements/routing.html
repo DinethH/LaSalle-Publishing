@@ -45,17 +45,21 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       app.route = 'home';
     });
 
-    page('/users', function() {
-      app.route = 'users';
+    page('/support', function() {
+      app.route = 'support';
+    });
+    
+    page('/products', function() {
+      app.route = 'products';
     });
 
-    page('/users/:name', function(data) {
-      app.route = 'user-info';
+    page('/products/:name', function(data) {
+      app.route = 'product-info';
       app.params = data.params;
     });
 
-    page('/contact', function() {
-      app.route = 'contact';
+    page('/about', function() {
+      app.route = 'about';
     });
 
     // 404

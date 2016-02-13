@@ -1,0 +1,9 @@
+{
+  "firebase": "lasalle-publishing",
+  "public": "dist",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}

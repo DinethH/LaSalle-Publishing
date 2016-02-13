@@ -1,22 +1,12 @@
 <!doctype html>
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="generator" content="Polymer Starter Kit">
-  <title>Polymer Starter Kit</title>
+  <meta name="generator" content="LeSalle Publishing">
+  <title>LeSalle Publishing</title>
 
   <!-- Place favicon.ico in the `app/` directory -->
 
@@ -63,30 +53,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
 
-    <paper-drawer-panel id="paperDrawerPanel">
+    <paper-drawer-panel id="paperDrawerPanel" responsive-width="6000px">
       <!-- Drawer Scroll Header Panel -->
       <paper-scroll-header-panel drawer fixed>
 
         <!-- Drawer Toolbar -->
         <paper-toolbar id="drawerToolbar">
-          <span class="menu-name">Menu</span>
+          <span class="menu-name">
+            <img class="menu-logo-mobile" src="images/LogoText_wm.png">
+          </span>
         </paper-toolbar>
 
         <!-- Drawer Content -->
-        <paper-menu attr-for-selected="data-route" selected="[[route]]">
+        <paper-menu id="menuMobile" attr-for-selected="data-route" selected="[[route]]">
           <a data-route="home" href="{{baseUrl}}">
             <iron-icon icon="home"></iron-icon>
             <span>Home</span>
           </a>
 
-          <a data-route="users" href="{{baseUrl}}users">
+          <a data-route="products" href="{{baseUrl}}products">
             <iron-icon icon="info"></iron-icon>
-            <span>Users</span>
+            <span>Products</span>
           </a>
 
-          <a data-route="contact" href="{{baseUrl}}contact">
+          <a data-route="support" href="{{baseUrl}}support">
             <iron-icon icon="mail"></iron-icon>
-            <span>Contact</span>
+            <span>Support</span>
+          </a>
+          <a data-route="about" href="{{baseUrl}}about">
+            <iron-icon icon="info-outline"></iron-icon>
+            <span>About</span>
           </a>
         </paper-menu>
       </paper-scroll-header-panel>
@@ -99,18 +95,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           <span class="space"></span>
 
-          <!-- Toolbar icons -->
-          <paper-icon-button icon="refresh"></paper-icon-button>
-          <paper-icon-button icon="search"></paper-icon-button>
+          <!-- Main menu  -->
+          <nav>
+            <ul>
+              <li>
+                <a data-route="home" href="{{baseUrl}}home">
+                  <paper-item>Home</paper-item></a>
+              </li>
+              <li>
+                <a data-route="products" href="{{baseUrl}}products">
+                  <paper-item>Products</paper-item></a>
+              </li>
+              <li>
+                <a data-route="support" href="{{baseUrl}}support">
+                  <paper-item>Support</paper-item></a>
+              </li>
+              <li>
+                <a data-route="about" href="{{baseUrl}}about">
+                  <paper-item>About</paper-item></a>
+              </li>
+            </ul>
+          </nav>
 
           <!-- Application name -->
           <div class="middle middle-container">
-            <div class="app-name">Polymer Starter Kit</div>
+            <div class="app-name">
+               <img class="menu-logo-desktop" src="images/BG_white.png">
+            </div>
           </div>
 
           <!-- Application sub title -->
           <div class="bottom bottom-container">
-            <div class="bottom-title">The future of the web today</div>
+            <div class="bottom-title">Tagline | Subtitle | Something</div>
           </div>
         </paper-toolbar>
 
@@ -118,64 +134,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="content">
           <iron-pages attr-for-selected="data-route" selected="{{route}}">
             <section data-route="home">
+              Home Page
+            </section>
+
+            <section data-route="products">
               <paper-material elevation="1">
-                <my-greeting></my-greeting>
-
-                <p class="subhead">You now have:</p>
-                <my-list></my-list>
-
-                <p>Looking for more Web App layouts? Check out our <a href="https://github.com/PolymerElements/app-layout-templates">layouts</a> collection. You can also <a href="http://polymerelements.github.io/app-layout-templates/">preview</a> them live.</p>
-              </paper-material>
-
-              <paper-material elevation="1">
-                <p>This is another card.</p>
-              </paper-material>
-
-              <paper-material elevation="1">
-                <h1 id="license">License</h1>
-                <p>Everything in this repo is BSD style license unless otherwise specified.</p>
-                <p>Copyright (c) 2015 The Polymer Authors. All rights reserved.</p>
-                <p>Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:</p>
-                <ul>
-                <li>Redistributions of source code must retain the above copyright
-                notice, this list of conditions and the following disclaimer.</li>
-                <li>Redistributions in binary form must reproduce the above
-                copyright notice, this list of conditions and the following disclaimer
-                in the documentation and/or other materials provided with the
-                distribution.</li>
-                <li>Neither the name of Google Inc. nor the names of its
-                contributors may be used to endorse or promote products derived from
-                this software without specific prior written permission.</li>
-                </ul>
-                <p>THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.</p>
+                <h2 class="page-title">Products</h2>
+                <p>This is the products section</p>
+                <a href$="{{baseUrl}}products/p1">Product 1</a><br>
+                <a href$="{{baseUrl}}products/p2">Product 2</a><br>
+                <a href$="{{baseUrl}}products/p3">Product 3</a><br>
+                <a href$="{{baseUrl}}products/p4">Product 4</a>
               </paper-material>
             </section>
 
-            <section data-route="users">
+            <section data-route="product-info">
               <paper-material elevation="1">
-                <h2 class="page-title">Users</h2>
-                <p>This is the users section</p>
-                <a href$="{{baseUrl}}users/Addy">Addy</a><br>
-                <a href$="{{baseUrl}}users/Rob">Rob</a><br>
-                <a href$="{{baseUrl}}users/Chuck">Chuck</a><br>
-                <a href$="{{baseUrl}}users/Sam">Sam</a>
-              </paper-material>
-            </section>
-
-            <section data-route="user-info">
-              <paper-material elevation="1">
-                <h2 class="page-title">User: {{params.name}}</h2>
+                <h2 class="page-title">Product: {{params.name}}</h2>
                 <div>This is {{params.name}}'s section</div>
               </paper-material>
             </section>
 
-            <section data-route="contact">
-              <paper-material elevation="1">
-                <h2 class="page-title">Contact</h2>
-                <p>This is the contact section</p>
-              </paper-material>
+            <section data-route="about">
+                <about-us></about-us>
             </section>
           </iron-pages>
+          
+          <footer>
+            <div class="footer-inner">
+                Designed by <a href="http://www.itsdineth.com">Dineth</a> 
+            </div>
+          </footer>
         </div>
       </paper-scroll-header-panel>
     </paper-drawer-panel>
