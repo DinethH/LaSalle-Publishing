@@ -6,12 +6,12 @@
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="generator" content="LeSalle Publishing">
-  <title>LeSalle Publishing</title>
+  <title>LaSalle Publishing</title>
 
   <!-- Place favicon.ico in the `app/` directory -->
 
   <!-- Chrome for Android theme color -->
-  <meta name="theme-color" content="#2E3AA1">
+  <meta name="theme-color" content="#4B0082">
 
   <!-- Web Application Manifest -->
   <link rel="manifest" href="manifest.json">
@@ -55,7 +55,7 @@
 
     <paper-drawer-panel id="paperDrawerPanel" responsive-width="6000px">
       <!-- Drawer Scroll Header Panel -->
-      <paper-scroll-header-panel drawer fixed>
+      <paper-scroll-header-panel drawer fixed >
 
         <!-- Drawer Toolbar -->
         <paper-toolbar id="drawerToolbar">
@@ -126,7 +126,7 @@
 
           <!-- Application sub title -->
           <div class="bottom bottom-container">
-            <div class="bottom-title">Tagline | Subtitle | Something</div>
+            <div class="bottom-title">Making complicated things, simple</div>
           </div>
         </paper-toolbar>
 
@@ -138,14 +138,9 @@
             </section>
 
             <section data-route="products">
-              <paper-material elevation="1">
-                <h2 class="page-title">Products</h2>
-                <p>This is the products section</p>
-                <a href$="{{baseUrl}}products/p1">Product 1</a><br>
-                <a href$="{{baseUrl}}products/p2">Product 2</a><br>
-                <a href$="{{baseUrl}}products/p3">Product 3</a><br>
-                <a href$="{{baseUrl}}products/p4">Product 4</a>
-              </paper-material>
+            
+              <products-page baseUrl="{{baseUrl}}"></products-page>
+          
             </section>
 
             <section data-route="product-info">
@@ -154,13 +149,17 @@
                 <div>This is {{params.name}}'s section</div>
               </paper-material>
             </section>
+            
+            <section data-route="support">
+                <support-us></support-us>
+            </section>
 
             <section data-route="about">
                 <about-us></about-us>
             </section>
           </iron-pages>
           
-          <footer>
+          <footer class="flex-end-align">
             <div class="footer-inner">
                 Designed by <a href="http://www.itsdineth.com">Dineth</a> 
             </div>

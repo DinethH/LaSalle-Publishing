@@ -30,7 +30,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     --secondary-text-color: #737373;
     --disabled-text-color: #9b9b9b;
     --divider-color: #dbdbdb;
-    --primary-color: #AA1B1B;
+    --primary-color: #4B0082;
     --light-primary-color: #c5cae9;
     --dark-primary-color: #303f9f;
     --accent-color: #ff4081;
@@ -140,7 +140,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   /* Height of the scroll area */
   .content {
-    height: 900px;
+    height: 100%;
   }
 
   section[data-route="home"] paper-material {
@@ -196,7 +196,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
     iron-pages {
-      padding: 48px 62px;
+      //padding: 48px 62px;
     }
 
     paper-material {
@@ -265,18 +265,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   footer a {
     color: #ffffff;
   }
-  
+  /* mobile */
   @media (max-width: 600px) {
     nav {
       display: none;
     }
   }
   
+  /* PC */
   @media (min-width: 600px) {
     #paperToggle {
       display: none;
     }
+
   }
-  
+
 
 </style>

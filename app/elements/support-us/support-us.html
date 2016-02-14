@@ -11,7 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-styles/typography.html">
 
-<dom-module id="about-us">
+<dom-module id="support-us">
   <template>
     <style>
       :host {
@@ -26,7 +26,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
       
       .header-image {
-        background: url('../../images/Guitar2.jpg');
+        background: url('../../images/guild_contact_us-1500x630.jpg');
         height: 500px;
         background-size: cover;
       }
@@ -34,8 +34,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         .header-image {
           height: 300px;
         }
+        p.first {
+          padding-top: 20px;
+        }
         p {
-          padding: 20px;
+          padding-left: 20px;
+          padding-right: 20px;
         }
       }
       
@@ -64,19 +68,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   
   <div class="header-on-image">
     <div class="container-desktop">
-      <h2>About Us</h2>
+      <h2>Support</h2>
     </div>
   </div>
   
   <div class="container-desktop" s>
-    <p>
-      LaSalle is a publishing company dedicated to making things such as learning music/musical instruments, science topics physics/chemistry and math less complicated. Bringing you books and videos that will show you what we believe to be the most efficient way to learn. You can incorporate our materials as a study aid to school studies or use in hobby time.  
+    <p class="first">
+      THANK YOU for partnering with LaSalle Publishing in their mission to make sure seemingly complicated things are made simple!  
     </p>
+    
+    <p>
+      We need your support for many upcoming speaking/musical engagements and products in development. Please consider partnering with LaSalle Publishing’s Support Team on a monthly basis with a recurring donation in any amount. To know exactly how your funds are being used, updates on new projects or an address to send a check or money order, please don’t hesitate to email <a href="mailto:info@lasallepub.com">info@lasallepub.com</a>  
+    </p>
+    
+    <p>When you choose to partner with us, you will receive new product samples, special partner-only event invites and a special newsletter detailing all the progress made.  </p>
+    <p>By the way, we really want to know who you are! After donating please send us a quick email letting us know who you are so we can connect with you. </p>
+    <p>We are beyond grateful for your support and every gift matters no matter how great or how small. What we do would not be possible without your contributions.  </p>
   </div>
-  
-  <br>
-  <br>
-  <br><br><br><br><br>
+
    
   </template>
 
@@ -85,7 +94,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       'use strict';
 
       Polymer({
-        is: 'about-us',
+        is: 'support-us',
 
         properties: {
           items: {
