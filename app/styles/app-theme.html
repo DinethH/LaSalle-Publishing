@@ -256,15 +256,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   }
   
-  footer {
-    background: #333333;
-    color: #ffffff;
-    text-align: center;
-    padding: 20px;
-  }
-  footer a {
-    color: #ffffff;
-  }
+
   .application-logo-mobile {
     display: none !important;
   }
@@ -296,7 +288,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
   }
+  
+  iron-pages {
+  min-height: calc(100% - 60px);
+  /* equal to footer height */
+  //margin-bottom: -60px; 
+}
+iron-pages:after {
+  content: "";
+  display: block;
+}
+  
 
+  
+  footer {
+    background: #333333;
+    color: #ffffff;
+    text-align: center;
+    padding: 20px;
+    height: 20px;
+  }
+  footer a {
+    color: #ffffff;
+  }
 
 
 </style>
