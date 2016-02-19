@@ -1,0 +1,158 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/classes/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/iron-icons/av-icons.html">
+
+
+<dom-module id="product-page">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      span {
+        @apply(--paper-font-body1);
+      }
+    .container-desktop {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    paper-material {
+      width: 100%;
+    }
+    
+    .product-header {
+      //height: 220px;
+      background: url('../../images/products/product1-s.png');
+      background-color: rgba(0,0,0,0.5);
+    }
+    .product-image {
+      height: 250px;
+      padding: 20px;
+    }
+    #addToCartButtonM {
+        display: none;
+      }
+    @media (max-width: 767px) {
+      #addToCartButton {
+        display: none;
+      }
+      #addToCartButtonM {
+        display: block;
+      }
+    }
+    #addToCartButton, #addToCartButtonM {
+      margin: 20px;
+    }
+    paper-button, paper-fab {
+      background: orange;
+      color: white;
+    }
+    .product-info {
+      padding: 20px;
+    }
+
+
+    </style>
+    
+
+  
+  <div class="container-desktop">
+    <iron-ajax url="../../item-data.json" last-response="{{data}}" auto></iron-ajax>
+    
+    <div style="">
+      <paper-material>
+        <div class="product-header">
+          <div class="layout horizontal">
+            <div>
+               <img class="product-image" src="../../images/products/product1.jpg">
+            </div>
+            <div class="flex"></div>
+            <div>
+              <div class="layout vertical" style="height: 290px;">
+                <div class="flex"></div>
+                <div>
+                  <paper-button id="addToCartButton" raised>
+                    <iron-icon icon="icons:add-shopping-cart"></iron-icon>
+                  Add to cart</paper-button>
+                  <paper-fab id="addToCartButtonM" icon="icons:add-shopping-cart"></paper-fab>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="product-info">
+          <div class="product-title">
+            <h3>Simple Guitar</h3>
+          </div>
+          <div class="product-price">
+            $19.99
+          </div>
+          
+          <div style="padding-top: 20px;">
+            <iron-icon icon="av:library-books"></iron-icon>
+            <iron-icon icon="av:videocam"></iron-icon>
+          </div>
+          
+          <div class="product-description">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sollicitudin a ligula blandit maximus. Phasellus fermentum sodales enim, at auctor ligula elementum ut. Cras vel lectus vulputate, tempor dui ut, viverra felis. Praesent elementum urna eget eros sollicitudin, a tincidunt quam laoreet. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut vel porttitor magna, vitae aliquet mi. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec nibh purus, blandit a est eu, mollis dignissim nisl.
+
+</p>
+            <p>Cras quis consequat nisl. Duis blandit urna placerat luctus ultricies. Aenean eget diam eu nibh congue tincidunt vitae vitae magna. Praesent eleifend dolor nec nibh accumsan lacinia. Ut rutrum gravida diam et convallis. Vivamus rutrum fermentum dui eu laoreet. Nulla vehicula, lectus sed auctor porta, metus mauris vestibulum ipsum, sit amet commodo nisl sapien eget turpis. Fusce vitae ex eu turpis efficitur varius ut ac nunc. Mauris pellentesque urna ac velit consectetur condimentum. Fusce ut vehicula ligula, consequat eleifend ligula. Praesent in interdum nisi.
+
+</p>
+            <p>Pellentesque varius blandit lobortis. Duis ornare tempor tellus, et facilisis risus tempus quis. Praesent posuere eget dui at aliquam. Aliquam lectus odio, vestibulum ut condimentum a, consectetur eget enim. Proin semper, diam in tempor volutpat, massa erat molestie nisl, quis ultricies tellus massa at sem. Aenean non ex mi. Maecenas suscipit faucibus massa, sed tincidunt ex facilisis vitae. Praesent tristique, eros ac ornare volutpat, purus nisl rhoncus libero, eget varius odio nunc sed augue. Fusce sit amet dictum tellus. Ut eu est posuere lorem pellentesque malesuada ac sed justo. Nullam nibh dolor, posuere nec lorem nec, ullamcorper sodales lectus. Aenean a felis ullamcorper, hendrerit est in, sodales lacus. Praesent quam nulla, pharetra vitae turpis nec, vehicula tempor quam.
+
+</p>
+          </div>
+        </div>
+      </paper-material>
+    </div>
+
+<br>
+<br>
+
+  </div>
+
+   
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'product-page',
+
+        properties: {
+          items: {
+            type: Array,
+            notify: true,
+          },
+          baseUrl: String,
+        },
+
+        ready: function() {
+         
+        }
+      });
+    })();
+  </script>
+</dom-module>

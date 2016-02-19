@@ -265,11 +265,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   footer a {
     color: #ffffff;
   }
+  .application-logo-mobile {
+    display: none !important;
+  }
   /* mobile */
   @media (max-width: 600px) {
     nav {
       display: none;
     }
+    .application-subtitle-desktop, .application-logo-desktop {
+      display: none !important;
+    }
+    .application-logo-mobile img {
+      padding-top: 10px;
+      width: 32px;
+    }
+    .application-logo-mobile {
+      display: block !important;
+    }
+    .tall {
+      height: 60px !important;
+    }
+  
   }
   
   /* PC */
@@ -279,6 +296,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
   }
+
 
 
 </style>
