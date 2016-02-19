@@ -73,17 +73,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     
 
-  
+
   <div class="container-desktop">
-    <iron-ajax url="../../includes/get-product-details.php" last-response="{{data}}" auto></iron-ajax>
-    
+    <iron-ajax url$="https://lasalle-publishing-dinethh.c9users.io/app/scripts/get-product-details.php?id={{product}}" last-response="{{data}}" auto></iron-ajax>
     <template is="dom-repeat" items="{{data}}">
     <div style="">
       <paper-material elevation="0">
         <div class="product-header">
           <div class="layout horizontal">
             <div>
-               <img class="product-image" src="../../images/products/product1.jpg">
+               <img class="product-image" src$="https://lasalle-publishing-dinethh.c9users.io/app/images/products/{{item.img}}">
             </div>
             <div class="flex"></div>
             <div>
@@ -144,6 +143,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             notify: true,
           },
           baseUrl: String,
+          product: String
         },
 
         ready: function() {

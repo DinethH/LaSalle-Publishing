@@ -2,7 +2,9 @@
 
 include_once ('db.php');
 
-$stmt = $db->query('SELECT * FROM products WHERE id = 1');
+$id = $_REQUEST['id'];
+
+$stmt = $db->query("SELECT * FROM products WHERE id = $id");
 
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

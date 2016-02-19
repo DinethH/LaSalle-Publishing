@@ -85,14 +85,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   
   <div class="container-desktop">
-      <iron-ajax url="../../includes/get-products-list.php" last-response="{{data}}" auto></iron-ajax>
+      <iron-ajax url="https://lasalle-publishing-dinethh.c9users.io/app/scripts/get-products-list.php" last-response="{{data}}" auto></iron-ajax>
    
    <div class="products-wrapper">
       <template is="dom-repeat" items="{{data}}">
         <div class="list-item">
             <a class="product-link" href="/products/{{item.id}}">
             <paper-material>
-              <img class="product-image" src="../../images/products/product1.jpg">
+              <img class="product-image" src$="https://lasalle-publishing-dinethh.c9users.io/app/images/products/{{item.img}}">
                <div class="product-title">{{item.name}}</div>
              
             </paper-material>
@@ -119,7 +119,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type: Array,
             notify: true,
           },
-          baseUrl: String,
+          base: String,
           productID: String
         },
 

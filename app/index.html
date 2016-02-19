@@ -148,12 +148,13 @@
 
             <section data-route="products">
             
-              <products-page baseUrl="{{baseUrl}}"></products-page>
+              <products-page base="{{baseUrl}}"></products-page>
           
             </section>
 
             <section data-route="product-info">
-              <product-page productID$="{{params.name}}"></product-page>
+              
+              <product-page product="{{params.name}}"></product-page>
             </section>
             
             <section data-route="support">
