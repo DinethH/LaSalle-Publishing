@@ -88,7 +88,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <iron-ajax url="../../includes/get-products-list.php" last-response="{{data}}" auto></iron-ajax>
    
    <div class="products-wrapper">
-      {{productID}}
       <template is="dom-repeat" items="{{data}}">
         <div class="list-item">
             <a class="product-link" href="/products/{{item.id}}">

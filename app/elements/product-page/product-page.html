@@ -75,8 +75,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   
   <div class="container-desktop">
-    <iron-ajax url="../../item-data.json" last-response="{{data}}" auto></iron-ajax>
+    <iron-ajax url="../../includes/get-product-details.php" last-response="{{data}}" auto></iron-ajax>
     
+    <template is="dom-repeat" items="{{data}}">
     <div style="">
       <paper-material elevation="0">
         <div class="product-header">
@@ -101,10 +102,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         
         <div class="product-info">
           <div class="product-title">
-            <h3>Simple Guitar</h3>
+            <h3>{{item.name}}</h3>
           </div>
           <div class="product-price">
-            $19.99
+            {{item.price}}
           </div>
           
           <div style="padding-top: 20px;">
@@ -112,20 +113,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <iron-icon icon="av:videocam"></iron-icon>
           </div>
           
-          <div class="product-description">
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce sollicitudin a ligula blandit maximus. Phasellus fermentum sodales enim, at auctor ligula elementum ut. Cras vel lectus vulputate, tempor dui ut, viverra felis. Praesent elementum urna eget eros sollicitudin, a tincidunt quam laoreet. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Ut vel porttitor magna, vitae aliquet mi. Interdum et malesuada fames ac ante ipsum primis in faucibus. Donec nibh purus, blandit a est eu, mollis dignissim nisl.
-
-</p>
-            <p>Cras quis consequat nisl. Duis blandit urna placerat luctus ultricies. Aenean eget diam eu nibh congue tincidunt vitae vitae magna. Praesent eleifend dolor nec nibh accumsan lacinia. Ut rutrum gravida diam et convallis. Vivamus rutrum fermentum dui eu laoreet. Nulla vehicula, lectus sed auctor porta, metus mauris vestibulum ipsum, sit amet commodo nisl sapien eget turpis. Fusce vitae ex eu turpis efficitur varius ut ac nunc. Mauris pellentesque urna ac velit consectetur condimentum. Fusce ut vehicula ligula, consequat eleifend ligula. Praesent in interdum nisi.
-
-</p>
-            <p>Pellentesque varius blandit lobortis. Duis ornare tempor tellus, et facilisis risus tempus quis. Praesent posuere eget dui at aliquam. Aliquam lectus odio, vestibulum ut condimentum a, consectetur eget enim. Proin semper, diam in tempor volutpat, massa erat molestie nisl, quis ultricies tellus massa at sem. Aenean non ex mi. Maecenas suscipit faucibus massa, sed tincidunt ex facilisis vitae. Praesent tristique, eros ac ornare volutpat, purus nisl rhoncus libero, eget varius odio nunc sed augue. Fusce sit amet dictum tellus. Ut eu est posuere lorem pellentesque malesuada ac sed justo. Nullam nibh dolor, posuere nec lorem nec, ullamcorper sodales lectus. Aenean a felis ullamcorper, hendrerit est in, sodales lacus. Praesent quam nulla, pharetra vitae turpis nec, vehicula tempor quam.
-
-</p>
+          <div class="product-description" style="padding-top: 20px;">
+           
+             {{item.description}}
+           
           </div>
         </div>
       </paper-material>
     </div>
+    </template>
 
 <br>
 <br>
