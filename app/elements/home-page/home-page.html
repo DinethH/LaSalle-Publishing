@@ -23,8 +23,49 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       margin: 0 auto;
     }
     
-    </style>
+    .home-image {
+      background: url('../../images/acoustic-guitar-for-beginners.jpg');
+      background-size: cover;
+      width: 100%;
+      height: calc(100vh - 56px);
+    }
+    .home-header {
+      font-size: 30px;
+      text-align: right;
+      padding-right: 15px;
+      color: white;
+      z-index: 1000;
+      text-shadow: 1px 1px 3px #333;
+      padding-bottom: 15px;
+    }
+    
+    @media (min-width: 768px) {
+      .home-image {
+        height: calc(100vh - 192px);
+      }
+      .home-header {
+        font-size: 48px;
+        padding: 40px;
+      }
+    }
 
+    h2 {
+      margin: 0;
+      padding: 0;
+    }
+    
+    </style>
+    
+    
+    <div class="home-image layout vertical">
+      <div class="flex"></div>
+                    <div class="home-header">
+        <h2>Play guitar in 30 days or your money back</h2>
+      </div>
+ 
+
+    </div>
+ 
    
   </template>
 
