@@ -1,0 +1,155 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/iron-list/iron-list.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/classes/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/iron-icons/av-icons.html">
+
+
+<dom-module id="product-page">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      span {
+        @apply(--paper-font-body1);
+      }
+    .container-desktop {
+      max-width: 1200px;
+      margin: 0 auto;
+     
+    }
+    
+    paper-material {
+      width: 100%;
+    }
+    
+    .product-header {
+      //height: 220px;
+      background: url('../../images/products/product1-s.png');
+      background-color: rgba(0,0,0,0.5);
+    }
+    .product-image {
+      height: 250px;
+      padding: 20px;
+    }
+    #addToCartButtonM {
+        display: none;
+      }
+    @media (max-width: 767px) {
+      #addToCartButton {
+        display: none;
+      }
+      #addToCartButtonM {
+        display: block;
+      }
+    }
+    #addToCartButton, #addToCartButtonM {
+      margin: 20px;
+    }
+    paper-button, paper-fab {
+      background: orange;
+      color: white;
+    }
+    .product-info {
+      padding: 20px;
+    }
+
+
+    </style>
+    
+
+
+  <div class="container-desktop">
+    <iron-ajax url$="https://lasalle-publishing-dinethh.c9users.io/app/scripts/get-product-details.php?id={{product}}" last-response="{{data}}" auto></iron-ajax>
+    <template is="dom-repeat" items="{{data}}">
+    <div style="">
+      <paper-material elevation="0">
+        <div class="product-header">
+          <div class="layout horizontal">
+            <div>
+               <img class="product-image" src$="https://lasalle-publishing-dinethh.c9users.io/app/images/products/{{item.img}}">
+            </div>
+            <div class="flex"></div>
+            <div>
+              <div class="layout vertical" style="height: 290px;">
+                <div class="flex"></div>
+                <div>
+                  <paper-button id="addToCartButton" raised>
+                    <iron-icon icon="icons:add-shopping-cart"></iron-icon>
+                  Add to cart</paper-button>
+                  <paper-fab id="addToCartButtonM" icon="icons:add-shopping-cart"></paper-fab>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="product-info">
+          <div class="product-title">
+            <h3>{{item.name}}</h3>
+          </div>
+          <div class="product-price">
+            {{item.price}}
+          </div>
+          
+          <div style="padding-top: 20px;">
+            <iron-icon icon="av:library-books"></iron-icon>
+            <iron-icon icon="av:videocam"></iron-icon>
+          </div>
+          
+          <div class="product-description" style="padding-top: 20px;">
+           
+             {{item.description}}
+           
+          </div>
+        </div>
+      </paper-material>
+    </div>
+    </template>
+
+<br>
+<br>
+
+  </div>
+
+   
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'product-page',
+
+        properties: {
+          items: {
+            type: Array,
+            notify: true,
+          },
+          baseUrl: String,
+          product: String
+        },
+
+        ready: function() {
+         
+        }
+      });
+    })();
+  </script>
+</dom-module>

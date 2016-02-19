@@ -1,0 +1,112 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+
+<dom-module id="support-us">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      span {
+        @apply(--paper-font-body1);
+      }
+      img {
+        width: 100%;
+      }
+      
+      .header-image {
+        background: url('../../images/guild_contact_us-1500x630.jpg');
+        height: 500px;
+        background-size: cover;
+      }
+      @media (max-width: 767px) {
+        .header-image {
+          height: 300px;
+        }
+        p.first {
+          padding-top: 20px;
+        }
+        p {
+          padding-left: 20px;
+          padding-right: 20px;
+        }
+      }
+      
+    .header-on-image {
+      background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 100%);
+      background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%);
+      background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 );
+      padding: 20px;
+      color: white;
+      margin-top: -110px;
+    }
+    h2 {
+      text-transform: uppercase;
+    }
+    .container-desktop {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    </style>
+    
+  <div class="header-image">
+    
+  </div>
+  
+  <div class="header-on-image">
+    <div class="container-desktop">
+      <h2>Support</h2>
+    </div>
+  </div>
+  
+  <div class="container-desktop" s>
+    <p class="first">
+      THANK YOU for partnering with LaSalle Publishing in their mission to make sure seemingly complicated things are made simple!  
+    </p>
+    
+    <p>
+      We need your support for many upcoming speaking/musical engagements and products in development. Please consider partnering with LaSalle Publishing’s Support Team on a monthly basis with a recurring donation in any amount. To know exactly how your funds are being used, updates on new projects or an address to send a check or money order, please don’t hesitate to email <a href="mailto:info@lasallepub.com">info@lasallepub.com</a>  
+    </p>
+    
+    <p>When you choose to partner with us, you will receive new product samples, special partner-only event invites and a special newsletter detailing all the progress made.  </p>
+    <p>By the way, we really want to know who you are! After donating please send us a quick email letting us know who you are so we can connect with you. </p>
+    <p>We are beyond grateful for your support and every gift matters no matter how great or how small. What we do would not be possible without your contributions.  </p>
+  </div>
+
+   
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'support-us',
+
+        properties: {
+          items: {
+            type: Array,
+            notify: true,
+          }
+        },
+
+        ready: function() {
+         
+        }
+      });
+    })();
+  </script>
+</dom-module>

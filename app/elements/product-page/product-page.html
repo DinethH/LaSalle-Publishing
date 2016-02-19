@@ -89,10 +89,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <div class="layout vertical" style="height: 290px;">
                 <div class="flex"></div>
                 <div>
-                  <paper-button id="addToCartButton" raised>
+                  <paper-button on-tap="addToCart" id="addToCartButton" raised>
                     <iron-icon icon="icons:add-shopping-cart"></iron-icon>
                   Add to cart</paper-button>
-                  <paper-fab id="addToCartButtonM" icon="icons:add-shopping-cart"></paper-fab>
+                  <paper-fab on-tap="addToCart" id="addToCartButtonM" icon="icons:add-shopping-cart"></paper-fab>
                 </div>
               </div>
             </div>
@@ -126,6 +126,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <br>
 
   </div>
+  
+  
+  <iron-ajax id="addToCart" url$="https://lasalle-publishing-dinethh.c9users.io/app/scripts/cart-add.php?id={{product}}" last-response="{{cartResponse}}"></iron-ajax>
+    
+  <paper-toast id="addToCartToast" text="Item added to cart!"></paper-toast>
 
    
   </template>
@@ -146,8 +151,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           product: String
         },
 
-        ready: function() {
-         
+        addToCart: function() {
+          document.querySelector('#addToCart').generateRequest();
+          this.$.addToCartToast.open();
         }
       });
     })();
