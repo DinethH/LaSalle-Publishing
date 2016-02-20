@@ -68,6 +68,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     .product-info {
       padding: 20px;
     }
+      
+  paper-toast {
+   --paper-toast-background-color: green;
+  }
 
 
     </style>
@@ -127,12 +131,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   </div>
   
+  <iron-ajax id="countCart" url="https://lasalle-publishing-dinethh.c9users.io/app/scripts/cart-count.php" last-response="{{ccount}}"></iron-ajax>
+  
   
   <iron-ajax id="addToCart" url$="https://lasalle-publishing-dinethh.c9users.io/app/scripts/cart-add.php?id={{product}}" last-response="{{cartResponse}}"></iron-ajax>
     
   <paper-toast id="addToCartToast" text="Item added to cart!"></paper-toast>
 
-   
+
   </template>
 
   <script>
@@ -148,12 +154,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             notify: true,
           },
           baseUrl: String,
-          product: String
+          product: String,
+          ccount: {
+            type: String,
+            notify: true,
+          }
         },
 
         addToCart: function() {
           document.querySelector('#addToCart').generateRequest();
           this.$.addToCartToast.open();
+          this.$.countCart.generateRequest();
         }
       });
     })();

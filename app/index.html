@@ -68,6 +68,7 @@
         </paper-toolbar>
 
         <!-- Drawer Content -->
+        
         <paper-menu id="menuMobile" attr-for-selected="data-route" selected="[[route]]">
           <a data-route="home" href="{{baseUrl}}">
             <iron-icon icon="home"></iron-icon>
@@ -91,16 +92,28 @@
       </paper-scroll-header-panel>
 
       <!-- Main Area -->
+      <iron-ajax id="countCart" auto url="https://lasalle-publishing-dinethh.c9users.io/app/scripts/cart-count.php" last-response="{{cartCount}}"></iron-ajax>
+  
       <paper-scroll-header-panel main id="headerPanelMain" condenses keep-condensed-header>
         <!-- Main Toolbar -->
         <paper-toolbar id="mainToolbar" class="tall">
           <paper-icon-button id="paperToggle" icon="menu" paper-drawer-toggle></paper-icon-button>
 
           <span class="space"></span>
-
+          
           <!-- Main menu  -->
           <nav>
             <ul>
+              <li>
+                <a data-route="home" href="{{baseUrl}}cart">
+                  <paper-icon-button icon="icons:shopping-cart"></paper-icon-button>
+                  <div class="num-cart-wrapper layout horizontal center center-justified">
+                    <div class="num-cart-inner">
+                      {{cartCount}}
+                    </div>
+                  </div>
+                </a>
+              </li>
               <li>
                 <a data-route="home" href="{{baseUrl}}home">
                   <paper-item>Home</paper-item></a>
@@ -154,7 +167,7 @@
 
             <section data-route="product-info">
               
-              <product-page product="{{params.name}}"></product-page>
+              <product-page ccount="{{cartCount}}" product="{{params.name}}"></product-page>
             </section>
             
             <section data-route="support">
