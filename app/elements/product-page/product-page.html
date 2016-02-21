@@ -158,10 +158,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           ccount: {
             type: String,
             notify: true,
+          },
+          cartResponse: {
+            observer: '_cartResponseChanged'
           }
+        },
+        _cartResponseChanged:function (newValue, oldValue) {
+          this.$.countCart.generateRequest();
         },
 
         addToCart: function() {
+          document.querySelector('#addToCart').generateRequest();
           document.querySelector('#addToCart').generateRequest();
           this.$.addToCartToast.open();
           this.$.countCart.generateRequest();
