@@ -105,7 +105,7 @@
           <nav>
             <ul>
               <li>
-                <a data-route="home" href="{{baseUrl}}cart">
+                <a data-route="cart" href="{{baseUrl}}cart">
                   <paper-icon-button icon="icons:shopping-cart"></paper-icon-button>
                   <div class="num-cart-wrapper layout horizontal center center-justified">
                     <div class="num-cart-inner">
@@ -142,7 +142,15 @@
           
           <div class="middle-container application-logo-mobile">
             <div class="app-name">
-               <img class="menu-logo-desktop" src="images/BG_white.png">
+               <!--<img class="menu-logo-desktop" src="images/BG_white.png">-->
+               <a data-route="cart" href="{{baseUrl}}cart" style="color: white;">
+                  <paper-icon-button icon="icons:shopping-cart"></paper-icon-button>
+                  <div class="num-cart-wrapper layout horizontal center center-justified">
+                    <div class="num-cart-inner">
+                      {{cartCount}}
+                    </div>
+                  </div>
+                </a>
             </div>
           </div>
 
