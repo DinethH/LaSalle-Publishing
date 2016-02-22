@@ -3,6 +3,7 @@
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/classes/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
 
 
 <dom-module id="cart-page">
@@ -38,6 +39,37 @@
     }
     paper-toast {
      --paper-toast-background-color: red;
+    }
+    .proceed-to-checkout {
+      text-align: left;
+      padding: 15px;
+    }
+    #proceedToCheckoutButton {
+      margin-left: 0px;
+    }
+    
+    @media (max-width: 600px) {
+      .proceed-to-checkout {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    margin: 0 auto;
+    width: calc(100vw);
+    text-align: right;
+    z-index: 1000;
+    background: orange;
+      }
+      
+      .proceed-to-checkout h3 {
+        display: inline;
+        padding-right: 20px;
+      }
+      .proceed-to-checkout paper-button {
+        background: white;
+      }
+      .checkout-inner {
+        padding-right: 30px;
+      }
     }
     
     </style>
@@ -76,13 +108,32 @@
     </div>
     
     
-    <div>
-      proceed with payment
+    <div class="proceed-to-checkout">
+      <div class="checkout-inner">
+        <h3>Total: ${{total}}</h3>
+        <paper-button on-tap="proceedToCheckout" id="proceedToCheckoutButton" raised>Checkout</paper-button>
+      </div>
     </div>
   </div>
   
   
+            <div class="buy-button" on-click="buyItem">
+                <form id="buyItemForm" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                    <input type="hidden" name="cmd" value="_ext-enter">
+                    <input type="hidden" name="redirect_cmd" value="_xclick">
+                    <input type="hidden" name="item_name" value="LaSalle Publishing">
+                    <input type="hidden" name="business" value="dineth3@sachintha.com">
+                    <input type="hidden" name="currency_code" value="USD">
+                    <input type="hidden" name="amount" value="{{total}}">
+                   <!-- <input type="hidden" name="first_name" value="{{name}}"> -->
+                   <!-- <input type="hidden" name="custom" value="{{accountNumber}}"> -->
+                    <input type="hidden" name="return" value="http://www.itsdineth.com">
+                </form>
+            <div>
+  
   <iron-ajax id="countCart" url="https://lasalle-publishing-dinethh.c9users.io/app/scripts/cart-count.php" last-response="{{ccount}}"></iron-ajax>
+  
+  <iron-ajax id="totalCart" url="https://lasalle-publishing-dinethh.c9users.io/app/scripts/cart-total.php" last-response="{{total}}"></iron-ajax>
   
   
   <paper-toast id="deleteCartToast" text="Item has been removed from the cart!"></paper-toast>
@@ -113,7 +164,8 @@
         },
 
         _ccountChanged: function (newValue, oldValue) {
-          this.$.cartData.generateRequest(); 
+          this.$.cartData.generateRequest();
+          this.$.totalCart.generateRequest(); 
         },
         _data2Changed: function (newValue, oldValue) {
           this.$.countCart.generateRequest();
@@ -125,6 +177,9 @@
           this.$.deleteItem.generateRequest();
           this.$.deleteCartToast.open();
           
+        },
+        proceedToCheckout: function () {
+            this.querySelector('#buyItemForm').submit();
         }
       });
     })();
