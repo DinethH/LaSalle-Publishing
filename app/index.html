@@ -88,6 +88,10 @@
             <iron-icon icon="info-outline"></iron-icon>
             <span>About</span>
           </a>
+          <a data-route="admin" href="{{baseUrl}}admin">
+            <iron-icon icon="info-outline"></iron-icon>
+            <span>Admin</span>
+          </a>
         </paper-menu>
       </paper-scroll-header-panel>
 
@@ -129,6 +133,10 @@
               <li>
                 <a data-route="about" href="{{baseUrl}}about">
                   <paper-item>About</paper-item></a>
+              </li>
+              <li>
+                <a data-route="admin" href="{{baseUrl}}admin">
+                  <paper-item>Admin</paper-item></a>
               </li>
             </ul>
           </nav>
@@ -186,8 +194,13 @@
                 <about-us></about-us>
             </section>
             
+            
             <section data-route="cart">
                 <cart-page ccount="{{cartCount}}"></cart-page>
+            </section>
+            
+            <section data-route="admin">
+                <admin-page></admin-page>
             </section>
             
           </iron-pages>
