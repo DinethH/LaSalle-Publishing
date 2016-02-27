@@ -1,0 +1,16 @@
+{
+  "name": "idbwrapper",
+  "description": "A cross-browser wrapper for IndexedDB",
+  "main": "idbstore.js",
+  "dependencies": {},
+  "homepage": "https://github.com/safetychanger/IDBWrapper",
+  "_release": "71d8705dd5",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "71d8705dd594f245d560f279640b0bb4fa58c9fa"
+  },
+  "_source": "git@github.com:safetychanger/IDBWrapper.git",
+  "_target": "master",
+  "_originalSource": "git@github.com:safetychanger/IDBWrapper.git"
+}

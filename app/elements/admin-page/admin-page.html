@@ -13,6 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../../bower_components/file-upload/file-upload.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 
 <dom-module id="admin-page">
   <template>
@@ -24,18 +25,48 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     .container-desktop {
       max-width: 1200px;
       margin: 0 auto;
+      padding: 20px;
+    }
+    
+    file-upload {
+      margin: 20px;
+      padding: 0;
+      
     }
    
     </style>
     
     
     <div class="container-desktop">
-      <paper-input label="Product title"></paper-input>
-      <paper-textarea label="Product description"></paper-textarea>
-      <paper-input type="number" label="Price"></paper-input>
-      <file-upload method="POST" target="app/images">Cover</file-upload>
+      <paper-input label="Product title" value="{{title}}"></paper-input>
+      <paper-textarea label="Product description" value="{{description}}"></paper-textarea>
+      <paper-input type="number" label="Price" value="{{price}}"></paper-input>
+      
+      <file-upload target="https://lasalle-publishing-dinethh.c9users.io/app/scripts/upload-file.php?type=cover" method="POST">Product Cover</file-upload>
+      <file-upload target="https://lasalle-publishing-dinethh.c9users.io/app/scripts/upload-file.php?type=backdrop" method="POST">Product Backdrop</file-upload>
+      <file-upload target="https://lasalle-publishing-dinethh.c9users.io/app/scripts/upload-file.php?type=ebook" method="POST">eBook</file-upload>
+      <file-upload target="https://lasalle-publishing-dinethh.c9users.io/app/scripts/upload-file.php?type=video" method="POST">Video</file-upload>
+
+      
+
+      
+      <div class="layout horizontal">
+        <div class="flex"></div>
+        <div><paper-button on-click="addItem">Save</paper-button></div>
+      </div>
+      
+      
+
+      
     </div>
- 
+    
+    
+    
+    
+  <iron-ajax id="addItemAjax" url$="https://lasalle-publishing-dinethh.c9users.io/app/scripts/add-item.php?title={{title}}&cover={{cover}}&backdrop={{backdrop}}&description={{description}}&price={{price}}&ebook={{ebook}}&video={{video}}" last-response="{{addItemResponse}}"></iron-ajax>
+
+  <paper-toast id="addItemToast" text="Item added successfully!"></paper-toast>
+   
    
   </template>
 
@@ -50,7 +81,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           items: {
             type: Array,
             notify: true,
-          }
+          },
+          addItemResponse: {
+            observer: '_cartResponseChanged'
+          },
+          ImageContent: String,
+          Image: String
+        },
+        _cartResponseChanged: function () {
+          this.$.addItemToast.open();
+          this.title = "";
+          this.description = "";
+          this.price = "";
+          this.cover = "";
+          this.backdrop = "";
+          this.ebook = "";
+          this.video = "";
+        },
+        addItem: function () {
+          this.$.addItemAjax.generateRequest();
+          console.log(this.$.itemImage.files);
+          
         }
       });
     })();
