@@ -14,6 +14,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
 <link rel="import" href="../../bower_components/file-upload/file-upload.html">
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
+<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
+<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+
 
 <dom-module id="admin-page">
   <template>
@@ -29,36 +35,75 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
     
     file-upload {
-      margin: 20px;
+      margin: 0;
       padding: 0;
       
+    }
+    
+    paper-fab {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+    }
+    
+    paper-dialog {
+      width: 600px;
+      padding: 20px;
+    }
+    h2 {
+      margin: 0;
+      padding: 0;
+    }
+    
+    @media (max-width: 600px) {
+      paper-dialog {
+        width: 100vw;
+        height: 100vh;
+        padding: 20px;
+      }
+      paper-dialog-scrollable {
+         width: 100vw;
+            
+      }
+
     }
    
     </style>
     
     
+<paper-dialog autoFitOnAttach id="addItemDialog" entry-animation="scale-up-animation"
+              exit-animation="fade-out-animation">
+  
+  <paper-dialog-scrollable>
+    <h2>Add New Product</h2>
+        <paper-input label="Product title" value="{{title}}"></paper-input>
+          <paper-textarea label="Product description" value="{{description}}"></paper-textarea>
+          <paper-input type="number" label="Price" value="{{price}}"></paper-input>
+          
+          <file-upload target="https://lasalle-publishing-dinethh.c9users.io/app/scripts/upload-file.php?type=cover" method="POST">Product Cover</file-upload>
+          <file-upload target="https://lasalle-publishing-dinethh.c9users.io/app/scripts/upload-file.php?type=backdrop" method="POST">Product Backdrop</file-upload>
+          <file-upload target="https://lasalle-publishing-dinethh.c9users.io/app/scripts/upload-file.php?type=ebook" method="POST">eBook</file-upload>
+          <file-upload target="https://lasalle-publishing-dinethh.c9users.io/app/scripts/upload-file.php?type=video" method="POST">Video</file-upload>
+    
+          
+    
+
+  </paper-dialog-scrollable>
+  <div class="buttons">
+    <paper-button on-click="addItem">Save</paper-button>
+  </div>
+</paper-dialog>
+    
+    
     <div class="container-desktop">
-      <paper-input label="Product title" value="{{title}}"></paper-input>
-      <paper-textarea label="Product description" value="{{description}}"></paper-textarea>
-      <paper-input type="number" label="Price" value="{{price}}"></paper-input>
       
-      <file-upload target="https://lasalle-publishing-dinethh.c9users.io/app/scripts/upload-file.php?type=cover" method="POST">Product Cover</file-upload>
-      <file-upload target="https://lasalle-publishing-dinethh.c9users.io/app/scripts/upload-file.php?type=backdrop" method="POST">Product Backdrop</file-upload>
-      <file-upload target="https://lasalle-publishing-dinethh.c9users.io/app/scripts/upload-file.php?type=ebook" method="POST">eBook</file-upload>
-      <file-upload target="https://lasalle-publishing-dinethh.c9users.io/app/scripts/upload-file.php?type=video" method="POST">Video</file-upload>
-
-      
-
-      
-      <div class="layout horizontal">
-        <div class="flex"></div>
-        <div><paper-button on-click="addItem">Save</paper-button></div>
-      </div>
-      
+      <aproducts-page id="aproducts"></aproducts-page>
       
 
       
     </div>
+    
+    <paper-fab on-click="addItemDialogToggle" icon="add"></paper-fab>
     
     
     
@@ -99,9 +144,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           this.video = "";
         },
         addItem: function () {
-          this.$.addItemAjax.generateRequest();
-          console.log(this.$.itemImage.files);
-          
+          if (this.title.length > 0 && this.description.length > 0 && this.price.length > 0) {
+            this.$.addItemAjax.generateRequest();
+            this.$.aproducts.foceRefresh();
+            this.$.addItemDialog.close();
+          }
+        },
+        addItemDialogToggle: function () {
+          this.$.addItemDialog.open();
         }
       });
     })();
