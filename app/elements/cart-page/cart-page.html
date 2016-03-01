@@ -74,6 +74,10 @@
     
     </style>
     
+    
+    <iron-ajax id="createOrder" url="https://lasalle-publishing-dinethh.c9users.io/app/scripts/create-order.php" last-response="{{order}}" auto></iron-ajax>
+   
+    
     <iron-ajax id="cartData" url="https://lasalle-publishing-dinethh.c9users.io/app/scripts/get-cart.php" last-response="{{data}}" auto></iron-ajax>
  
     <iron-ajax id="deleteItem" url$="https://lasalle-publishing-dinethh.c9users.io/app/scripts/cart-delete.php?id={{itemID}}" last-response="{{data2}}"></iron-ajax>
@@ -126,7 +130,8 @@
                     <input type="hidden" name="currency_code" value="USD">
                     <input type="hidden" name="amount" value="{{total}}">
                    <!-- <input type="hidden" name="first_name" value="{{name}}"> -->
-                   <!-- <input type="hidden" name="custom" value="{{accountNumber}}"> -->
+                    <input type="hidden" name="custom" value="Order Number: {{order}}">
+                    <input type="hidden" name="notify_url" value="https://lasalle-publishing-dinethh.c9users.io/app/scripts/order.php?order={{order}}">
                     <input type="hidden" name="return" value="http://www.itsdineth.com">
                 </form>
             <div>
@@ -166,6 +171,7 @@
         _ccountChanged: function (newValue, oldValue) {
           this.$.cartData.generateRequest();
           this.$.totalCart.generateRequest(); 
+          this.$.createOrder.generateRequest(); 
         },
         _data2Changed: function (newValue, oldValue) {
           this.$.countCart.generateRequest();
