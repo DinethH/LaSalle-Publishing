@@ -67,8 +67,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       }
 
     }
+    
+ 
    
     </style>
+    
+    
+    <iron-ajax id="checkAdminSessionAjax" url="https://lasalle-publishing-dinethh.c9users.io/app/scripts/check-admin-session.php" last-response="{{adminSession}}" auto></iron-ajax>
+
+
     
     
 <paper-dialog autoFitOnAttach id="addItemDialog" entry-animation="scale-up-animation"
@@ -97,18 +104,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
     <div class="container-desktop">
       
-<iron-pages id="ironPages" selected="0">
+<iron-pages id="ironPages" selected="-1">
   <div>
     
     <h2>Login</h2>
-    <form>
-      <paper-input type="text" label="Username" value="{{username}}"></paper-input>
-      <paper-input type="password" label="Password" value="{{password}}"></paper-input>
-    </form>
-    <iron-ajax auto id="loginAjax" 
-      url$="https://lasalle-publishing-dinethh.c9users.io/app/scripts/login.php?username={{username}}&password={{password}}" last-response="{{loginResponse}}"></iron-ajax>
-  
-
+    <login-form lresponse="{{loginResponse}}"></login-form>
   </div>
   <div>
       <aproducts-page id="aproducts"></aproducts-page>
@@ -122,7 +122,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
     </div>
     
-    <paper-fab on-click="addItemDialogToggle" icon="add"></paper-fab>
+    <paper-fab id="addItemID" on-click="addItemDialogToggle" icon="add"></paper-fab>
     
     
     
@@ -154,11 +154,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           loginResponse: {
             type: Number,
             observer: '_loginResponseChanged'
+          },
+          adminSession: {
+            type: Number,
+            observer: '_adminSessionChanged'
+          }
+        },
+        _adminSessionChanged: function () {
+          if (this.adminSession == 1) {
+            this.$.ironPages.select(1);
+            this.$.addItemID.style.display = "block";
+          } else if (this.adminSession == 0) {
+            this.$.ironPages.select(0);
+            this.$.addItemID.style.display = "none";
           }
         },
         _loginResponseChanged: function () {
           if (this.loginResponse == 1) {
-            this.$.ironPages.selectNext();
+            this.$.ironPages.select(1);
+            this.$.addItemID.style.display = "block";
           }
         },
         _cartResponseChanged: function () {
