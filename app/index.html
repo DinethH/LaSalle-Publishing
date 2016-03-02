@@ -79,6 +79,11 @@
             <iron-icon icon="info"></iron-icon>
             <span>Products</span>
           </a>
+          
+          <a data-route="download" href="{{baseUrl}}download">
+            <iron-icon icon="info"></iron-icon>
+            <span>Download</span>
+          </a>
 
           <a data-route="support" href="{{baseUrl}}support">
             <iron-icon icon="mail"></iron-icon>
@@ -125,6 +130,10 @@
               <li>
                 <a data-route="products" href="{{baseUrl}}products">
                   <paper-item>Products</paper-item></a>
+              </li>
+              <li>
+                <a data-route="download" href="{{baseUrl}}download">
+                  <paper-item>Download</paper-item></a>
               </li>
               <li>
                 <a data-route="support" href="{{baseUrl}}support">
@@ -192,6 +201,10 @@
 
             <section data-route="about">
                 <about-us></about-us>
+            </section>
+            
+            <section data-route="download">
+                <download-page></download-page>
             </section>
             
             
