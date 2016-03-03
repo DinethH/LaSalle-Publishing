@@ -10,6 +10,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-styles/typography.html">
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-animated-pages.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/classes/iron-flex-layout.html">
+
+<link rel="import" href="../../bower_components/neon-animation/neon-animatable-behavior.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-in-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/slide-from-right-animation.html">
+
+
 
 <dom-module id="home-page">
   <template>
@@ -23,8 +33,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       margin: 0 auto;
     }
     
-    .home-image {
-      background: url('../../images/acoustic-guitar-for-beginners.jpg');
+    .home-image-1 {
+      background: url('../../images/slide1.jpg');
       background-size: cover;
       width: 100%;
       height: calc(100vh - 56px);
@@ -36,6 +46,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       color: white;
       text-shadow: 1px 1px 3px #333;
       padding-bottom: 15px;
+      //position: absolute;
+      //margin-top: -250px;
+    }
+    
+    iron-image, .home-wrapper {
+      width: 100vw;
+      height: calc(100vh - 56px);
+      margin-bottom: -4px;
     }
     
     @media (min-width: 768px) {
@@ -46,6 +64,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         font-size: 48px;
         padding: 40px;
       }
+      iron-image, .home-wrapper {
+        width: 100vw;
+        height: calc(100vh - 192px);
+      }
     }
 
     h2 {
@@ -53,17 +75,79 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       padding: 0;
     }
     
+    .tag-wrapper {
+      position: absolute;
+      margin-top: calc(-100vh + 56px);
+      height: calc(100vh - 56px);
+    }
+    
+
     </style>
     
-    
+<!--
     <div class="home-image layout vertical">
+      
+   
       <div class="flex"></div>
                     <div class="home-header">
         <h2>Play guitar in 30 days or your money back.</h2>
       </div>
- 
-
     </div>
+    
+    
+    
+   <iron-image src="../../images/acoustic-guitar-for-beginners.jpg" sizing="cover"></iron-image>
+
+ -->
+ 
+ <div class="layout vertical home-wrapper">
+   
+   <neon-animated-pages class="flex" selected="[[selected]]" on-click="next"
+    entry-animation="fade-in-animation" exit-animation="fade-out-animation">
+       <section>
+         <iron-image src="../../images/slide1.jpg" sizing="cover"></iron-image>
+         <neon-animated-pages class="flex" selected="[[selected2]]"
+    entry-animation="slide-from-right-animation">
+              <div></div>
+              <div class="layout vertical tag-wrapper">
+                <div class="flex"></div>
+                <div class="home-header">
+                  <h2>Play guitar in 30 days or your money back.</h2>
+                </div>
+              </div>
+            </neon-animated-pages>
+       </section>
+       <section>
+         <iron-image src="../../images/slide2.jpg" sizing="cover"></iron-image>
+         <neon-animated-pages class="flex" selected="[[selected2]]"
+    entry-animation="slide-from-right-animation">
+              <div></div>
+              <div class="layout vertical tag-wrapper">
+                <div class="flex"></div>
+                <div class="home-header">
+                  <h2>Page 2</h2>
+                </div>
+              </div>
+            </neon-animated-pages>
+       </section>
+       <section>
+         <iron-image src="../../images/slide3.jpg" sizing="cover"></iron-image>
+         <neon-animated-pages class="flex" selected="[[selected2]]"
+    entry-animation="slide-from-right-animation">
+              <div></div>
+              <div class="layout vertical tag-wrapper">
+                <div class="flex"></div>
+                <div class="home-header">
+                  <h2>Page 3</h2>
+                </div>
+              </div>
+            </neon-animated-pages>
+       </section>
+
+   </neon-animated-pages>
+   
+   
+ </div>
  
    
   </template>
@@ -79,12 +163,30 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           items: {
             type: Array,
             notify: true,
-          }
+          },
+          selected: {
+            type: Number,
+            observer: '_selectedChanged',
+          },
         },
-
-        ready: function() {
-         
+        _selectedChanged: function (newValue, oldValue) {
+            this.selected2 = 0;
+            this.selected2 = 1;
+        },
+        attached: function() {
+           //this.async(function() {
+              this.selected = -1;
+              this.selected2 = 0;
+           //});
+           this.next();
+              
+        },
+        next: function () {
+          this.selected = this.selected === 2 ? 0 : this.selected + 1;
+          this.async(this.next, 6000);
         }
+
+
       });
     })();
   </script>
