@@ -43,7 +43,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     .list-item {
       margin: 10px;
     }
- 
+       .product-image, .image-wrapper {
+        float: none;
+     }
+     .product-title {
+       float: none;
+     }
+   .clearfloat {
+     clear: both;
+   }
+
 
      .products-wrapper {
       display: -webkit-flex; /* Safari */
@@ -67,6 +76,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       -webkit-justify-content: center;
       justify-content: center;
      }
+     
+     .product-image {
+        float: left;
+        width: 150px;
+     }
+     .image-wrapper {
+       float: left;
+     }
+     .product-title {
+       float: right;
+       width: calc(100vw - 190px);
+     }
+     paper-material {
+       width: calc(100vw - 15px);
+       margin: 0;
+       
+     }
+     
     }
     
     
@@ -92,8 +119,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="list-item">
             <a class="product-link" href="/products/{{item.id}}">
             <paper-material>
-              <img class="product-image" src$="https://lasalle-publishing-dinethh.c9users.io/app/images/products/{{item.img}}">
+               <div class="image-wrapper">
+                 <img class="product-image" src$="https://lasalle-publishing-dinethh.c9users.io/app/images/products/{{item.img}}">
+              
+               </div>
                <div class="product-title">{{item.name}}</div>
+               <div class="clearfloat"></div>
              
             </paper-material>
           </a>
