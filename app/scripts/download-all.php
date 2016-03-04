@@ -6,7 +6,7 @@ include_once ('db.php');
 
 $orderNumber = $_REQUEST['orderNumber'];
 
-$strDownloadFolder = "https://lasalle-publishing-dinethh.c9users.io/app/images/products/";
+$strDownloadFolder = "../images/products/";
 
 $stmt = $db->query("SELECT * 
           FROM orders 
@@ -34,16 +34,20 @@ foreach ($rows as $row) {
 
 }
 
+
+
 $zip = new ZipArchive();
 $zip_name = time().".zip"; // Zip name
 $zip->open($zip_name,  ZipArchive::CREATE);
 foreach ($files as $file) {
+    
   $path = $file;
+
   if(file_exists($path)){
-  $zip->addFromString(basename($path),  file_get_contents($path));  
+    $zip->addFromString(basename($path),  file_get_contents($path));  
   }
   else{
-   echo"file does not exist";
+   echo"file does not exist<br>";
   }
 }
 $zip->close();

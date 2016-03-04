@@ -5,22 +5,27 @@ session_start();
 $servername = getenv('IP');
 
 //The directory where the download files are kept - keep outside of the web document root
-$strDownloadFolder = "https://lasalle-publishing-dinethh.c9users.io/app/images/products/";
+$strDownloadFolder = "https://lasallepub.com/images/products/";
 
 //If you can download a file more than once
 $boolAllowMultipleDownload = 0;
 
 //connect to the DB
-$resDB = mysql_connect($servername, "dinethh", "");
+$resDB = mysql_connect($servername, "lasallepub", "6h4HR2TcdPFL");
 mysql_select_db("lasallepub", $resDB);
 
 //download type
 $type = $_GET['type'];
 
+
+
 if(!empty($_GET['key'])){
 	//check the DB for the key
 	$resCheck = mysql_query("SELECT * FROM products WHERE id = '".mysql_real_escape_string($_GET['key'])."' LIMIT 1");
 	$arrCheck = mysql_fetch_assoc($resCheck);
+	
+
+	
 	if($type == "ebook"){
 
 		$strDownload = $strDownloadFolder.$arrCheck['ebook'];
@@ -36,6 +41,7 @@ if(!empty($_GET['key'])){
 		echo $strFile;
 
 		exit;
+	
 		
 
 
