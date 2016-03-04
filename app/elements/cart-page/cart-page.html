@@ -75,12 +75,12 @@
     </style>
     
     
-    <iron-ajax id="createOrder" url="http://lasallepub.com/scripts/create-order.php" last-response="{{order}}" auto></iron-ajax>
+    <iron-ajax id="createOrder" url="https://lasallepub.com/scripts/create-order.php" last-response="{{order}}" auto></iron-ajax>
    
     
-    <iron-ajax id="cartData" url="http://lasallepub.com/scripts/get-cart.php" last-response="{{data}}" auto></iron-ajax>
+    <iron-ajax id="cartData" url="https://lasallepub.com/scripts/get-cart.php" last-response="{{data}}" auto></iron-ajax>
  
-    <iron-ajax id="deleteItem" url$="http://lasallepub.com/scripts/cart-delete.php?id={{itemID}}" last-response="{{data2}}"></iron-ajax>
+    <iron-ajax id="deleteItem" url$="https://lasallepub.com/scripts/cart-delete.php?id={{itemID}}" last-response="{{data2}}"></iron-ajax>
 
 
   <div class="container-desktop layout horizontal">
@@ -131,14 +131,14 @@
                     <input type="hidden" name="amount" value="{{total}}">
                    <!-- <input type="hidden" name="first_name" value="{{name}}"> -->
                     <input type="hidden" name="custom" value="Order Number: {{order}}">
-                    <input type="hidden" name="notify_url" value="http://lasallepub.com/scripts/order.php?order={{order}}">
+                    <input type="hidden" name="notify_url" value="https://lasallepub.com/scripts/order.php?order={{order}}">
                     <input type="hidden" name="return" value="http://www.itsdineth.com">
                 </form>
             <div>
   
-  <iron-ajax id="countCart" url="http://lasallepub.com/scripts/cart-count.php" last-response="{{ccount}}"></iron-ajax>
+  <iron-ajax id="countCart" url="https://lasallepub.com/scripts/cart-count.php" last-response="{{ccount}}"></iron-ajax>
   
-  <iron-ajax id="totalCart" url="http://lasallepub.com/scripts/cart-total.php" last-response="{{total}}"></iron-ajax>
+  <iron-ajax id="totalCart" url="https://lasallepub.com/scripts/cart-total.php" last-response="{{total}}"></iron-ajax>
   
   
   <paper-toast id="deleteCartToast" text="Item has been removed from the cart!"></paper-toast>

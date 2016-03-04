@@ -70,9 +70,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
     </style>
     
-<iron-ajax id="orderInfoAjax" url$="http://lasallepub.com/scripts/order-info.php?orderNumber={{orderNumber}}" last-response="{{orders}}"></iron-ajax>
+<iron-ajax id="orderInfoAjax" url$="https://lasallepub.com/scripts/order-info.php?orderNumber={{orderNumber}}" last-response="{{orders}}"></iron-ajax>
 
-<iron-ajax id="downloadAjax" url$="http://lasallepub.com/scripts/download.php?key={{itemID}}&type={{downloadType}}" last-response="{{downloadResponse}}" handle-as="document"></iron-ajax>
+<iron-ajax id="downloadAjax" url$="https://lasallepub.com/scripts/download.php?key={{itemID}}&type={{downloadType}}" last-response="{{downloadResponse}}" handle-as="document"></iron-ajax>
      
 
 <div class="container-desktop">
@@ -158,7 +158,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           var itemIDO = this.$.orderItems.itemForElement(e.target);
           this.itemID = itemIDO.id;
           this.downloadType = "ebook";
-          window.location.href = "http://lasallepub.com/scripts/download.php?key="+this.itemID+"&type="+this.downloadType; 
+          window.location.href = "https://lasallepub.com/scripts/download.php?key="+this.itemID+"&type="+this.downloadType; 
           //this.$.downloadAjax.generateRequest();
           //uriContent = "data:application/octet-stream," + encodeURIComponent(dataFromServer);
           
@@ -168,10 +168,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           var itemIDO = this.$.orderItems.itemForElement(e.target);
           this.itemID = itemIDO.id;
           this.downloadType = "video";
-          window.location.href = "http://lasallepub.com/scripts/download.php?key="+this.itemID+"&type="+this.downloadType; 
+          window.location.href = "https://lasallepub.com/scripts/download.php?key="+this.itemID+"&type="+this.downloadType; 
         },
         downloadAll: function () {
-          window.location.href = "http://lasallepub.com/scripts/download-all.php?orderNumber="+this.orderNumber; 
+          window.location.href = "https://lasallepub.com/scripts/download-all.php?orderNumber="+this.orderNumber; 
         }
       });
     })();
