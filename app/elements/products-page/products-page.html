@@ -13,6 +13,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/classes/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/iron-image/iron-image.html">
 
 
 
@@ -38,7 +39,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
     
     .product-image {
-      width: 100%;
+      width: 230px;
+      height: 290px;
     }
     .list-item {
       margin: 10px;
@@ -80,6 +82,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      .product-image {
         float: left;
         width: 150px;
+        height: 190px;
      }
      .image-wrapper {
        float: left;
@@ -120,7 +123,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             <a class="product-link" href="/products/{{item.id}}">
             <paper-material>
                <div class="image-wrapper">
-                 <img class="product-image" src$="https://lasallepub.com/images/products/{{item.img}}">
+                 <iron-image class="product-image" sizing="cover" src$="https://lasallepub.com/images/products/{{item.img}}"></iron-image>
               
                </div>
                <div class="product-title">{{item.name}}</div>
