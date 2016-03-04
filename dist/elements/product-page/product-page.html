@@ -79,7 +79,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
   <div class="container-desktop">
-    <iron-ajax url$="http://lasallepub.com/scripts/get-product-details.php?id={{product}}" last-response="{{data}}" auto></iron-ajax>
+    <iron-ajax url$="https://lasallepub.com/scripts/get-product-details.php?id={{product}}" last-response="{{data}}" auto></iron-ajax>
     <template is="dom-repeat" items="{{data}}">
     <div style="">
       <paper-material elevation="0">
@@ -131,10 +131,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   </div>
   
-  <iron-ajax id="countCart" url="http://lasallepub.com/scripts/cart-count.php" last-response="{{ccount}}"></iron-ajax>
+  <iron-ajax id="countCart" url="https://lasallepub.com/scripts/cart-count.php" last-response="{{ccount}}"></iron-ajax>
   
   
-  <iron-ajax id="addToCart" url$="http://lasallepub.com/scripts/cart-add.php?id={{product}}" last-response="{{cartResponse}}"></iron-ajax>
+  <iron-ajax id="addToCart" url$="https://lasallepub.com/scripts/cart-add.php?id={{product}}" last-response="{{cartResponse}}"></iron-ajax>
     
   <paper-toast id="addToCartToast" text="Item added to cart!"></paper-toast>
 

@@ -172,6 +172,9 @@
           this.$.cartData.generateRequest();
           this.$.totalCart.generateRequest(); 
           this.$.createOrder.generateRequest(); 
+          if (this.ccount == 0) {
+            window.location = "https://lasallepub.com"
+          }
         },
         _data2Changed: function (newValue, oldValue) {
           this.$.countCart.generateRequest();
