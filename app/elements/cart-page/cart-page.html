@@ -90,7 +90,7 @@
         <paper-material elevation="1">
           <div class="layout horizontal">
             <div>
-              <img class="product-image" src$="https://lasalle-publishing-dinethh.c9users.io/app/images/products/{{item.img}}">
+              <img class="product-image" src$="https://lasallepub.com/images/products/{{item.img}}">
             </div>
             <div class="product-details layout vertical">
               <div class="product-title">
@@ -172,9 +172,7 @@
           this.$.cartData.generateRequest();
           this.$.totalCart.generateRequest(); 
           this.$.createOrder.generateRequest(); 
-          if (this.ccount == 0) {
-            window.location = "https://lasallepub.com"
-          }
+
         },
         _data2Changed: function (newValue, oldValue) {
           this.$.countCart.generateRequest();
@@ -185,6 +183,9 @@
           this.$.deleteItem.generateRequest();
           this.$.deleteItem.generateRequest();
           this.$.deleteCartToast.open();
+          if (this.ccount == 1) {
+            window.location = "https://lasallepub.com"
+          }
           
         },
         proceedToCheckout: function () {

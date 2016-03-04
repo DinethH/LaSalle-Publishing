@@ -22,4 +22,4 @@ $stmt = $db->query('SELECT *
 
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-echo json_encode($rows, JSON_PRETTY_PRINT);
+jsonOut ($rows);

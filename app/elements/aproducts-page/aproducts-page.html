@@ -85,14 +85,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   
   <div class="container-desktop">
-      <iron-ajax id="aproductsID" url="http://lasallepub.com/scripts/get-products-list.php" last-response="{{data}}" auto></iron-ajax>
+      <iron-ajax id="aproductsID" url="https://lasallepub.com/scripts/get-products-list.php" last-response="{{data}}" auto></iron-ajax>
    
    <div class="products-wrapper">
       <template is="dom-repeat" items="{{data}}">
         <div class="list-item">
             <a class="product-link" href="/products/{{item.id}}">
             <paper-material>
-              <img class="product-image" src$="https://lasalle-publishing-dinethh.c9users.io/app/images/products/{{item.img}}">
+              <img class="product-image" src$="https://lasallepub.com/images/products/{{item.img}}">
                <div class="product-title">{{item.name}}</div>
              
             </paper-material>
@@ -120,10 +120,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             notify: true,
           },
           base: String,
-          productID: String
+          productID: String,
         },
 
-        https://lasallepub.com/: function() {
+        foceRefresh: function() {
           this.$.aproductsID.generateRequest();
         }
       });

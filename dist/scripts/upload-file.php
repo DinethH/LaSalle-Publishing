@@ -24,7 +24,7 @@ if (!empty($_FILES)) {
     
 
 }
-$target_dir = "https://lasalle-publishing-dinethh.c9users.io/app/images/products/";
+$target_dir = "../images/products/";
 
 if ($type == 'cover') {
     $target_file = $target_dir . $_SESSION['cover'];

@@ -36,8 +36,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     .download-reader-banner {
       width: 100%;
       height: 200px;
-      background: rgba(200,155,155,1);
+      //background: rgba(200,155,155,1);
       margin-bottom: 20px;
+      text-align: center;
+    }
+    .download-reader-banner img {
+      width: 90%;
+      max-width: 300px;
+      padding: 20px;
     }
     .download-ebook {
       width: 100%;
@@ -80,6 +86,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <div class="order-wrapper">
     <h4>Enter the Order Number</h4>
     
+    
     <paper-input type="number" label="Order Number" value="{{orderNumber}}"></paper-input>
     
     <paper-button on-click="orderInfo">Submit</paper-button>
@@ -87,17 +94,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   
   <!-- page 2 -->
   
+  <hr style="margin-left: 20px; margin-right: 20px;">
+  
   <div>
     <div class="download-reader-banner">
-      
+      <h2>eBook Reader</h2>
+      <div>
+        <iron-icon icon="icons:file-download"></iron-icon>
+      </div>
+      <div>
+        <a target="_blank" title="Download Calibre" href="http://calibre-ebook.com/">
+          <img src="https://lasallepub.com/images/ebookm.png">
+        </a>
+      </div>
     </div>
     
     <div style="padding: 20px;">
+      <br><br><br><br><br>
       
       <template id="orderItems" is="dom-repeat" items="{{orders}}">
         <div class="layout horizontal" style="margin-bottom: 20px;">
           <div>
-            <img class="product-image" src$="https://lasalle-publishing-dinethh.c9users.io/app/images/products/{{item.img}}">
+            <img class="product-image" src$="https://lasallepub.com/images/products/{{item.img}}">
           </div>
           <div class="flex">
             {{item.name}}
