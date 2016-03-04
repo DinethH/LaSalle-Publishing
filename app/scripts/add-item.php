@@ -22,8 +22,8 @@ $stmt->execute(array(':name' => $title, ':img' => $cover, ':screenshot' => $back
             
 $affected_rows = $stmt->rowCount();
 if ($affected_rows > 0) {
-    echo 1;
+    jsonOut (1);
 } else {
-    print 0;
+    jsonOut (0);
 }
 

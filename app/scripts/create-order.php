@@ -29,9 +29,9 @@ $stmt->execute(array(':orderNumber' => $orderNumber, ':items' => $items,':total'
             
 $affected_rows = $stmt->rowCount();
 if ($affected_rows > 0) {
-    echo $orderNumber;
+    jsonOut ($orderNumber);
 } else {
-    print 0;
+    jsonOut (0);
 }
 
 

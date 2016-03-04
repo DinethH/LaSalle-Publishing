@@ -1,0 +1,193 @@
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/iron-flex-layout/classes/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+
+
+<dom-module id="cart-page">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+    .container-desktop {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .product-image {
+      width: 100px;
+    }
+    
+    paper-material {
+      margin: 20px;
+      padding: 15px;
+    }
+    
+    .product-title {
+      font-weight: bold;
+      
+    }
+    .product-details {
+      padding-left: 25px;
+    }
+    .product-price {
+      color: #666;
+      padding-top: 20px;
+    }
+    paper-toast {
+     --paper-toast-background-color: red;
+    }
+    .proceed-to-checkout {
+      text-align: left;
+      padding: 15px;
+    }
+    #proceedToCheckoutButton {
+      margin-left: 0px;
+    }
+    
+    @media (max-width: 600px) {
+      .proceed-to-checkout {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    margin: 0 auto;
+    width: calc(100vw);
+    text-align: right;
+    z-index: 1000;
+    background: orange;
+      }
+      
+      .proceed-to-checkout h3 {
+        display: inline;
+        padding-right: 20px;
+      }
+      .proceed-to-checkout paper-button {
+        background: white;
+      }
+      .checkout-inner {
+        padding-right: 30px;
+      }
+    }
+    
+    </style>
+    
+    
+    <iron-ajax id="createOrder" url="http://lasallepub.com/scripts/create-order.php" last-response="{{order}}" auto></iron-ajax>
+   
+    
+    <iron-ajax id="cartData" url="http://lasallepub.com/scripts/get-cart.php" last-response="{{data}}" auto></iron-ajax>
+ 
+    <iron-ajax id="deleteItem" url$="http://lasallepub.com/scripts/cart-delete.php?id={{itemID}}" last-response="{{data2}}"></iron-ajax>
+
+
+  <div class="container-desktop layout horizontal">
+
+    <div class="flex">
+      <template id="cartItems" is="dom-repeat" items="{{data}}">
+        <paper-material elevation="1">
+          <div class="layout horizontal">
+            <div>
+              <img class="product-image" src$="https://lasalle-publishing-dinethh.c9users.io/app/images/products/{{item.img}}">
+            </div>
+            <div class="product-details layout vertical">
+              <div class="product-title">
+                {{item.name}}
+              </div>
+              <div class="product-price">
+                ${{item.price}}
+              </div>
+            </div>
+            <div class="flex"></div>
+            <div>
+              <paper-icon-button on-tap="deletItem" id="deleteItemButton" icon="delete"></paper-icon-button>
+            </div>
+            
+            
+          </div>
+        </paper-material>
+      </template>
+    </div>
+    
+    
+    <div class="proceed-to-checkout">
+      <div class="checkout-inner">
+        <h3>Total: ${{total}}</h3>
+        <paper-button on-tap="proceedToCheckout" id="proceedToCheckoutButton" raised>Checkout</paper-button>
+      </div>
+    </div>
+  </div>
+  
+  
+            <div class="buy-button" on-click="buyItem">
+                <form id="buyItemForm" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
+                    <input type="hidden" name="cmd" value="_ext-enter">
+                    <input type="hidden" name="redirect_cmd" value="_xclick">
+                    <input type="hidden" name="item_name" value="LaSalle Publishing">
+                    <input type="hidden" name="business" value="dineth3-facilitator@sachintha.com">
+                    <input type="hidden" name="currency_code" value="USD">
+                    <input type="hidden" name="amount" value="{{total}}">
+                   <!-- <input type="hidden" name="first_name" value="{{name}}"> -->
+                    <input type="hidden" name="custom" value="Order Number: {{order}}">
+                    <input type="hidden" name="notify_url" value="http://lasallepub.com/scripts/order.php?order={{order}}">
+                    <input type="hidden" name="return" value="http://www.itsdineth.com">
+                </form>
+            <div>
+  
+  <iron-ajax id="countCart" url="http://lasallepub.com/scripts/cart-count.php" last-response="{{ccount}}"></iron-ajax>
+  
+  <iron-ajax id="totalCart" url="http://lasallepub.com/scripts/cart-total.php" last-response="{{total}}"></iron-ajax>
+  
+  
+  <paper-toast id="deleteCartToast" text="Item has been removed from the cart!"></paper-toast>
+   
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'cart-page',
+
+        properties: {
+          items: {
+            type: Array,
+            notify: true,
+          },
+          ccount: {
+            type: String,
+            notify: true,
+            observer: '_ccountChanged'
+          },
+          itemID: String,
+          data2: {
+            observer: '_data2Changed'
+          }
+        },
+
+        _ccountChanged: function (newValue, oldValue) {
+          this.$.cartData.generateRequest();
+          this.$.totalCart.generateRequest(); 
+          this.$.createOrder.generateRequest(); 
+        },
+        _data2Changed: function (newValue, oldValue) {
+          this.$.countCart.generateRequest();
+        },
+        deletItem: function(e) {
+          var itemIDO = this.$.cartItems.itemForElement(e.target);
+          this.itemID = itemIDO.id;
+          this.$.deleteItem.generateRequest();
+          this.$.deleteItem.generateRequest();
+          this.$.deleteCartToast.open();
+          
+        },
+        proceedToCheckout: function () {
+            this.querySelector('#buyItemForm').submit();
+        }
+      });
+    })();
+  </script>
+</dom-module>

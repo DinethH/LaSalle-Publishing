@@ -17,4 +17,4 @@ if (strlen($_REQUEST['id']) > 0) {
 }
 
 
-print_r($_SESSION['cart']);
+jsonOut (1);

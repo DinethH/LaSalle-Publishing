@@ -1,0 +1,179 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-styles/typography.html">
+<link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/iron-icons/av-icons.html">
+
+<dom-module id="download-page">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+ 
+    .container-desktop {
+      max-width: 1200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    
+    .order-wrapper {
+      max-width: 500px;
+      padding: 20px;
+      margin: 0 auto;
+    }
+    
+    .download-reader-banner {
+      width: 100%;
+      height: 200px;
+      background: rgba(200,155,155,1);
+      margin-bottom: 20px;
+    }
+    .download-ebook {
+      width: 100%;
+      height: 200px;
+      background: rgba(155,200,155,1);    
+    }
+    .download-video {
+      width: 100%;
+      height: 200px;
+      background: rgba(155,155,200,1);     
+    }
+    .download-both {
+      width: 100%;
+      height: 200px;
+      background: rgba(200,200,200,1);     
+    }
+    .product-image {
+      width: 150px;
+    }
+    
+    @media (max-width: 600px) {
+      .product-image {
+        width: 80px;
+      }
+    }
+    
+    #downloadAllButton {
+      display: none;
+    }
+    
+    </style>
+    
+<iron-ajax id="orderInfoAjax" url$="http://lasallepub.com/scripts/order-info.php?orderNumber={{orderNumber}}" last-response="{{orders}}"></iron-ajax>
+
+<iron-ajax id="downloadAjax" url$="http://lasallepub.com/scripts/download.php?key={{itemID}}&type={{downloadType}}" last-response="{{downloadResponse}}" handle-as="document"></iron-ajax>
+     
+
+<div class="container-desktop">
+  
+  <div class="order-wrapper">
+    <h4>Enter the Order Number</h4>
+    
+    <paper-input type="number" label="Order Number" value="{{orderNumber}}"></paper-input>
+    
+    <paper-button on-click="orderInfo">Submit</paper-button>
+  </div>
+  
+  <!-- page 2 -->
+  
+  <div>
+    <div class="download-reader-banner">
+      
+    </div>
+    
+    <div style="padding: 20px;">
+      
+      <template id="orderItems" is="dom-repeat" items="{{orders}}">
+        <div class="layout horizontal" style="margin-bottom: 20px;">
+          <div>
+            <img class="product-image" src$="https://lasalle-publishing-dinethh.c9users.io/app/images/products/{{item.img}}">
+          </div>
+          <div class="flex">
+            {{item.name}}
+          </div>
+          <div class="layout horizontal">
+            <div>
+              <paper-icon-button icon="av:library-books" on-click="downloadEbook"></paper-icon-button>
+            </div>
+            <div>
+              <paper-icon-button icon="av:videocam" on-click="downloadVideo"></paper-icon-button>
+            </div>
+          </div>
+        </div>
+      </template>
+      
+      
+      <div class="layout horizontal end-justified">
+        <paper-button id="downloadAllButton" on-click="downloadAll">Download All</paper-button>
+      </div>
+      
+    </div>
+
+    
+  </div>
+  
+</div>
+
+<br>
+<br>
+<br>
+
+
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'download-page',
+
+        properties: {
+          items: {
+            type: Array,
+            notify: true,
+          },
+
+        },
+        
+     
+
+        orderInfo: function() {
+          //alert("");
+          this.$.orderInfoAjax.generateRequest();
+          this.$.downloadAllButton.style.display = "block";
+        },
+        downloadEbook: function(e) {
+          var itemIDO = this.$.orderItems.itemForElement(e.target);
+          this.itemID = itemIDO.id;
+          this.downloadType = "ebook";
+          window.location.href = "http://lasallepub.com/scripts/download.php?key="+this.itemID+"&type="+this.downloadType; 
+          //this.$.downloadAjax.generateRequest();
+          //uriContent = "data:application/octet-stream," + encodeURIComponent(dataFromServer);
+          
+          //window.open(uriContent, 'filename.txt');
+        },
+        downloadVideo: function(e) {
+          var itemIDO = this.$.orderItems.itemForElement(e.target);
+          this.itemID = itemIDO.id;
+          this.downloadType = "video";
+          window.location.href = "http://lasallepub.com/scripts/download.php?key="+this.itemID+"&type="+this.downloadType; 
+        },
+        downloadAll: function () {
+          window.location.href = "http://lasallepub.com/scripts/download-all.php?orderNumber="+this.orderNumber; 
+        }
+      });
+    })();
+  </script>
+</dom-module>

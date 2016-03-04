@@ -40,8 +40,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
     .product-header {
       //height: 220px;
-      background: url('../../images/products/product1-s.png');
-      background-color: rgba(0,0,0,0.5);
+      //background: url('../../images/products/product1-s.png');
+      background-color: #ccc;
     }
     .product-image {
       height: 250px;
@@ -68,6 +68,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     .product-info {
       padding: 20px;
     }
+      
+  paper-toast {
+   --paper-toast-background-color: green;
+  }
 
 
     </style>
@@ -75,7 +79,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
   <div class="container-desktop">
-    <iron-ajax url$="https://lasalle-publishing-dinethh.c9users.io/app/scripts/get-product-details.php?id={{product}}" last-response="{{data}}" auto></iron-ajax>
+    <iron-ajax url$="http://lasallepub.com/scripts/get-product-details.php?id={{product}}" last-response="{{data}}" auto></iron-ajax>
     <template is="dom-repeat" items="{{data}}">
     <div style="">
       <paper-material elevation="0">
@@ -89,10 +93,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <div class="layout vertical" style="height: 290px;">
                 <div class="flex"></div>
                 <div>
-                  <paper-button id="addToCartButton" raised>
+                  <paper-button on-tap="addToCart" id="addToCartButton" raised>
                     <iron-icon icon="icons:add-shopping-cart"></iron-icon>
                   Add to cart</paper-button>
-                  <paper-fab id="addToCartButtonM" icon="icons:add-shopping-cart"></paper-fab>
+                  <paper-fab on-tap="addToCart" id="addToCartButtonM" icon="icons:add-shopping-cart"></paper-fab>
                 </div>
               </div>
             </div>
@@ -126,8 +130,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <br>
 
   </div>
+  
+  <iron-ajax id="countCart" url="http://lasallepub.com/scripts/cart-count.php" last-response="{{ccount}}"></iron-ajax>
+  
+  
+  <iron-ajax id="addToCart" url$="http://lasallepub.com/scripts/cart-add.php?id={{product}}" last-response="{{cartResponse}}"></iron-ajax>
+    
+  <paper-toast id="addToCartToast" text="Item added to cart!"></paper-toast>
 
-   
+
   </template>
 
   <script>
@@ -143,11 +154,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             notify: true,
           },
           baseUrl: String,
-          product: String
+          product: String,
+          ccount: {
+            type: String,
+            notify: true,
+          },
+          cartResponse: {
+            observer: '_cartResponseChanged'
+          }
+        },
+        _cartResponseChanged:function (newValue, oldValue) {
+          this.$.countCart.generateRequest();
         },
 
-        ready: function() {
-         
+        addToCart: function() {
+          document.querySelector('#addToCart').generateRequest();
+          document.querySelector('#addToCart').generateRequest();
+          this.$.addToCartToast.open();
+          this.$.countCart.generateRequest();
         }
       });
     })();

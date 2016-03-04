@@ -8,4 +8,4 @@ if ($_SESSION['cart'])
     unset($_SESSION['cart']);
 
 
-print_r($_SESSION['cart']);
+jsonOut (1);
