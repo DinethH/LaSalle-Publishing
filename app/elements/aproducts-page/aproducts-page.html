@@ -13,6 +13,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="../../bower_components/iron-list/iron-list.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/classes/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/paper-icon-button/paper-icon-button.html">
+
 
 
 
@@ -58,14 +60,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
     @media (max-width: 767px) {
          .products-wrapper {
-      display: -webkit-flex; /* Safari */
-      -webkit-flex-wrap: wrap; /* Safari 6.1+ */
-      display: flex;   
-      flex-wrap: wrap;
-      -webkit-align-items: center;
-      align-items: center;
-      -webkit-justify-content: center;
-      justify-content: center;
+            display: -webkit-flex; /* Safari */
+            -webkit-flex-wrap: wrap; /* Safari 6.1+ */
+            display: flex;   
+            flex-wrap: wrap;
+            -webkit-align-items: center;
+            align-items: center;
+            -webkit-justify-content: center;
+            justify-content: center;
      }
     }
     
@@ -88,12 +90,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <iron-ajax id="aproductsID" url="https://lasallepub.com/scripts/get-products-list.php" last-response="{{data}}" auto></iron-ajax>
    
    <div class="products-wrapper">
-      <template is="dom-repeat" items="{{data}}">
+      <template id="adminProductsID" is="dom-repeat" items="{{data}}">
         <div class="list-item">
-            <a class="product-link" href="/products/{{item.id}}">
+            <a class="product-link">
             <paper-material>
               <img class="product-image" src$="https://lasallepub.com/images/products/{{item.img}}">
-               <div class="product-title">{{item.name}}</div>
+               <div class="product-title layout horizontal">
+                 <div>{{item.name}}</div>
+                 <div class="flex"></div>
+                 <div>
+                   <paper-icon-button on-click="deleteItem" icon="icons:delete"></paper-icon-button>
+                 </div>
+               </div>
              
             </paper-material>
           </a>
@@ -121,10 +129,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           },
           base: String,
           productID: String,
+          itemID: String,
         },
 
         foceRefresh: function() {
           this.$.aproductsID.generateRequest();
+        },
+        deleteItem: function (e) {
+          var itemIDO = this.$.adminProductsID.itemForElement(e.target);
+          this.itemID = itemIDO.id;
+          console.log(this.itemID);
         }
       });
     })();
