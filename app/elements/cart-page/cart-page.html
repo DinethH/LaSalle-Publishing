@@ -91,6 +91,8 @@
 
 
   <div class="container-desktop layout horizontal">
+    
+
 
     <div class="flex">
       <template id="cartItems" is="dom-repeat" items="{{data}}">
@@ -183,11 +185,14 @@
         },
         _data2Changed: function (newValue, oldValue) {
           this.$.countCart.generateRequest();
+          this.$.countCart.generateRequest();
+          this.$.countCart.generateRequest();
+          this.$.countCart.generateRequest();
+          this.$.countCart.generateRequest();
         },
         deletItem: function(e) {
           var itemIDO = this.$.cartItems.itemForElement(e.target);
           this.itemID = itemIDO.id;
-          this.$.deleteItem.generateRequest();
           this.$.deleteItem.generateRequest();
           this.$.deleteCartToast.open();
           if (this.ccount == 1) {

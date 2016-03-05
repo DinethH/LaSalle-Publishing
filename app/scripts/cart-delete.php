@@ -8,13 +8,10 @@ $itemID = $_REQUEST['id'];
 
 $key = array_search($itemID, ($_SESSION['cart']));
 
-
-
 if ($_SESSION['cart']) {
     unset($_SESSION['cart'][$key]);
-    print 1;
+    jsonOut(1);
 } else {
-    print 0;
+    jsonOut(0);
 }
 
-?>
