@@ -55,6 +55,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       padding: 0;
     }
     
+    .loginSection {
+      margin: 0 auto;
+      max-width: 500px;
+      padding: 15px;
+    }
+    
     @media (max-width: 600px) {
       paper-dialog {
         width: 100vw;
@@ -105,7 +111,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="container-desktop">
       
 <iron-pages id="ironPages" selected="-1">
-  <div>
+  <div class="loginSection">
     
     <h2>Login</h2>
     <login-form lresponse="{{loginResponse}}"></login-form>
