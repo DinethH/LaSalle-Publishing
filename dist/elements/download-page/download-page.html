@@ -11,6 +11,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-styles/typography.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-material/paper-material.html">
 <link rel="import" href="../../bower_components/iron-icons/av-icons.html">
 
 <dom-module id="download-page">
@@ -74,6 +75,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       display: none;
     }
     
+    .errorMessage {
+      color: red;
+      padding: 8px;
+      border-radius: 3px;
+      margin-top: 8px;
+    }
+    
+    .item-title {
+      text-align: left;
+      font-weight: bold;
+      padding: 10px;
+    }
+    
     </style>
     
 <iron-ajax id="orderInfoAjax" url$="https://lasallepub.com/scripts/order-info.php?orderNumber={{orderNumber}}" last-response="{{orders}}"></iron-ajax>
@@ -90,6 +104,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <paper-input type="number" label="Order Number" value="{{orderNumber}}"></paper-input>
     
     <paper-button on-click="orderInfo">Submit</paper-button>
+    
+    <div class="errorMessage">
+      {{errorMessage}}
+    </div>
   </div>
   
   <!-- page 2 -->
@@ -113,11 +131,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <br><br><br><br><br>
       
       <template id="orderItems" is="dom-repeat" items="{{orders}}">
-        <div class="layout horizontal" style="margin-bottom: 20px;">
+        <paper-material elevation="1" class="layout horizontal" style="margin-bottom: 20px;">
           <div>
             <img class="product-image" src$="https://lasallepub.com/images/products/{{item.img}}">
           </div>
-          <div class="flex">
+          <div class="flex item-title">
             {{item.name}}
           </div>
           <div class="layout horizontal">
@@ -128,7 +146,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <paper-icon-button icon="av:videocam" on-click="downloadVideo"></paper-icon-button>
             </div>
           </div>
-        </div>
+        </paper-material>
       </template>
       
       
@@ -162,15 +180,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type: Array,
             notify: true,
           },
+          orders: {
+            observer: '_ordersChanged',
+          },
+          errorMessage: String,
 
         },
-        
-     
-
+        _ordersChanged: function (newValue, oldValue) {
+          if (this.orders != 0) {
+            this.$.downloadAllButton.style.display = "block";
+            this.errorMessage = "";
+          } else {
+            this.$.downloadAllButton.style.display = "none";
+            this.errorMessage = "An error occured. Please try again later.";
+          }
+        },
         orderInfo: function() {
           //alert("");
-          this.$.orderInfoAjax.generateRequest();
-          this.$.downloadAllButton.style.display = "block";
+          if (this.orderNumber.length > 9) {
+            this.$.orderInfoAjax.generateRequest();
+            this.errorMessage = "";
+          } else {
+            this.errorMessage = "Please enter a valid order number.";
+          }
         },
         downloadEbook: function(e) {
           var itemIDO = this.$.orderItems.itemForElement(e.target);

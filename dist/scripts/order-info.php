@@ -22,4 +22,11 @@ $stmt = $db->query('SELECT *
 
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-jsonOut ($rows);
+$rowCount =  $stmt->rowCount();
+
+if ($rowCount > 0) {
+    jsonOut ($rows);
+}
+else {
+    jsonOut(0);
+}

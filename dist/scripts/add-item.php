@@ -8,7 +8,7 @@ $title = $_REQUEST['title'];
 $description = $_REQUEST['description'];
 $price = $_REQUEST['price'];
 $cover = $_SESSION['cover'];
-$backdrop = $_SESSION['backdrop'];
+$backdrop = "";
 $ebook = $_SESSION['ebook'];
 $video = $_SESSION['video'];
 

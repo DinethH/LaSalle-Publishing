@@ -21651,7 +21651,8 @@ if (!window.Promise) {
     }
     
     .product-image {
-      width: 100%;
+      width: 230px;
+      height: 290px;
     }
     .list-item {
       margin: 10px;
@@ -21693,6 +21694,7 @@ if (!window.Promise) {
      .product-image {
         float: left;
         width: 150px;
+        height: 190px;
      }
      .image-wrapper {
        float: left;
@@ -21733,7 +21735,7 @@ if (!window.Promise) {
             <a class="product-link" href="/products/{{item.id}}">
             <paper-material>
                <div class="image-wrapper">
-                 <img class="product-image" src$="https://lasallepub.com/images/products/{{item.img}}">
+                 <iron-image class="product-image" sizing="cover" src$="https://lasallepub.com/images/products/{{item.img}}"></iron-image>
               
                </div>
                <div class="product-title">{{item.name}}</div>
@@ -22105,8 +22107,9 @@ if (!window.Promise) {
       background-color: #ccc;
     }
     .product-image {
-      height: 250px;
-      padding: 20px;
+      width: 200px;
+      height: 260px;
+      margin: 10px;
     }
     #addToCartButtonM {
         display: none;
@@ -22147,7 +22150,7 @@ if (!window.Promise) {
         <div class="product-header">
           <div class="layout horizontal">
             <div>
-               <img class="product-image" src$="https://lasallepub.com/images/products/{{item.img}}">
+               <iron-image sizing="cover" class="product-image" src$="https://lasallepub.com/images/products/{{item.img}}"></iron-image>
             </div>
             <div class="flex"></div>
             <div>
@@ -22257,7 +22260,10 @@ if (!window.Promise) {
       margin: 20px;
       padding: 15px;
     }
-    
+    paper-button {
+      background: orange;
+      color: white;
+    }    
     .product-title {
       font-weight: bold;
       
@@ -22299,6 +22305,10 @@ if (!window.Promise) {
       .proceed-to-checkout paper-button {
         background: white;
       }
+      paper-button {
+        background: white;
+        color: black;
+      }
       .checkout-inner {
         padding-right: 30px;
       }
@@ -22316,6 +22326,8 @@ if (!window.Promise) {
 
 
   <div class="container-desktop layout horizontal">
+    
+
 
     <div class="flex">
       <template id="cartItems" is="dom-repeat" items="{{data}}">
@@ -22408,11 +22420,14 @@ if (!window.Promise) {
         },
         _data2Changed: function (newValue, oldValue) {
           this.$.countCart.generateRequest();
+          this.$.countCart.generateRequest();
+          this.$.countCart.generateRequest();
+          this.$.countCart.generateRequest();
+          this.$.countCart.generateRequest();
         },
         deletItem: function(e) {
           var itemIDO = this.$.cartItems.itemForElement(e.target);
           this.itemID = itemIDO.id;
-          this.$.deleteItem.generateRequest();
           this.$.deleteItem.generateRequest();
           this.$.deleteCartToast.open();
           if (this.ccount == 1) {
@@ -25788,6 +25803,12 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
       padding: 0;
     }
     
+    .loginSection {
+      margin: 0 auto;
+      max-width: 500px;
+      padding: 15px;
+    }
+    
     @media (max-width: 600px) {
       paper-dialog {
         width: 100vw;
@@ -25819,8 +25840,7 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
           <paper-textarea label="Product description" value="{{description}}"></paper-textarea>
           <paper-input type="number" label="Price" value="{{price}}"></paper-input>
           
-          <file-upload target="https://lasallepub.com/scripts/upload-file.php?type=cover" method="POST">Product Cover</file-upload>
-          <file-upload target="https://lasallepub.com/scripts/upload-file.php?type=backdrop" method="POST">Product Backdrop</file-upload>
+          <file-upload target="https://lasallepub.com/scripts/upload-file.php?type=cover" method="POST">Cover</file-upload>
           <file-upload target="https://lasallepub.com/scripts/upload-file.php?type=ebook" method="POST">eBook</file-upload>
           <file-upload target="https://lasallepub.com/scripts/upload-file.php?type=video" method="POST">Video</file-upload>
     
@@ -25837,7 +25857,7 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
     <div class="container-desktop">
       
 <iron-pages id="ironPages" selected="-1">
-  <div>
+  <div class="loginSection">
     
     <h2>Login</h2>
     <login-form lresponse="{{loginResponse}}"></login-form>
@@ -25973,14 +25993,14 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
     
     @media (max-width: 767px) {
          .products-wrapper {
-      display: -webkit-flex; /* Safari */
-      -webkit-flex-wrap: wrap; /* Safari 6.1+ */
-      display: flex;   
-      flex-wrap: wrap;
-      -webkit-align-items: center;
-      align-items: center;
-      -webkit-justify-content: center;
-      justify-content: center;
+            display: -webkit-flex; /* Safari */
+            -webkit-flex-wrap: wrap; /* Safari 6.1+ */
+            display: flex;   
+            flex-wrap: wrap;
+            -webkit-align-items: center;
+            align-items: center;
+            -webkit-justify-content: center;
+            justify-content: center;
      }
     }
     
@@ -26003,12 +26023,18 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
       <iron-ajax id="aproductsID" url="https://lasallepub.com/scripts/get-products-list.php" last-response="{{data}}" auto=""></iron-ajax>
    
    <div class="products-wrapper">
-      <template is="dom-repeat" items="{{data}}">
+      <template id="adminProductsID" is="dom-repeat" items="{{data}}">
         <div class="list-item">
-            <a class="product-link" href="/products/{{item.id}}">
+            <a class="product-link">
             <paper-material>
               <img class="product-image" src$="https://lasallepub.com/images/products/{{item.img}}">
-               <div class="product-title">{{item.name}}</div>
+               <div class="product-title layout horizontal">
+                 <div>{{item.name}}</div>
+                 <div class="flex"></div>
+                 <div>
+                   <paper-icon-button on-click="deleteItem" icon="icons:delete"></paper-icon-button>
+                 </div>
+               </div>
              
             </paper-material>
           </a>
@@ -26036,10 +26062,16 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
           },
           base: String,
           productID: String,
+          itemID: String,
         },
 
         foceRefresh: function() {
           this.$.aproductsID.generateRequest();
+        },
+        deleteItem: function (e) {
+          var itemIDO = this.$.adminProductsID.itemForElement(e.target);
+          this.itemID = itemIDO.id;
+          console.log(this.itemID);
         }
       });
     })();
@@ -26151,6 +26183,19 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
       display: none;
     }
     
+    .errorMessage {
+      color: red;
+      padding: 8px;
+      border-radius: 3px;
+      margin-top: 8px;
+    }
+    
+    .item-title {
+      text-align: left;
+      font-weight: bold;
+      padding: 10px;
+    }
+    
     </style>
     
 <iron-ajax id="orderInfoAjax" url$="https://lasallepub.com/scripts/order-info.php?orderNumber={{orderNumber}}" last-response="{{orders}}"></iron-ajax>
@@ -26167,6 +26212,10 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
     <paper-input type="number" label="Order Number" value="{{orderNumber}}"></paper-input>
     
     <paper-button on-click="orderInfo">Submit</paper-button>
+    
+    <div class="errorMessage">
+      {{errorMessage}}
+    </div>
   </div>
   
   
@@ -26190,11 +26239,11 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
       <br><br><br><br><br>
       
       <template id="orderItems" is="dom-repeat" items="{{orders}}">
-        <div class="layout horizontal" style="margin-bottom: 20px;">
+        <paper-material elevation="1" class="layout horizontal" style="margin-bottom: 20px;">
           <div>
             <img class="product-image" src$="https://lasallepub.com/images/products/{{item.img}}">
           </div>
-          <div class="flex">
+          <div class="flex item-title">
             {{item.name}}
           </div>
           <div class="layout horizontal">
@@ -26205,7 +26254,7 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
               <paper-icon-button icon="av:videocam" on-click="downloadVideo"></paper-icon-button>
             </div>
           </div>
-        </div>
+        </paper-material>
       </template>
       
       
@@ -26239,15 +26288,29 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
             type: Array,
             notify: true,
           },
+          orders: {
+            observer: '_ordersChanged',
+          },
+          errorMessage: String,
 
         },
-        
-     
-
+        _ordersChanged: function (newValue, oldValue) {
+          if (this.orders != 0) {
+            this.$.downloadAllButton.style.display = "block";
+            this.errorMessage = "";
+          } else {
+            this.$.downloadAllButton.style.display = "none";
+            this.errorMessage = "An error occured. Please try again later.";
+          }
+        },
         orderInfo: function() {
           //alert("");
-          this.$.orderInfoAjax.generateRequest();
-          this.$.downloadAllButton.style.display = "block";
+          if (this.orderNumber.length > 9) {
+            this.$.orderInfoAjax.generateRequest();
+            this.errorMessage = "";
+          } else {
+            this.errorMessage = "Please enter a valid order number.";
+          }
         },
         downloadEbook: function(e) {
           var itemIDO = this.$.orderItems.itemForElement(e.target);

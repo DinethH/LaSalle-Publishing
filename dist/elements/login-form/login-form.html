@@ -19,34 +19,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
-      .errorMessage {
-        color: red;
-      }
 
      
     </style>
     
 <form>
-
-
-<paper-input id="emailID" type="email" label="Email" value="{{email}}" required></paper-input>
-<paper-input id="passwordID" type="password" label="Password" value="{{password}}" required></paper-input>
+<paper-input type="email" label="Email" value="{{email}}"></paper-input>
+<paper-input type="password" label="Password" value="{{password}}"></paper-input>
 </form>
-
-
-
 <iron-ajax id="loginAjax" 
 url$="https://lasallepub.com/scripts/login.php?email={{email}}&password={{password}}" last-response="{{lresponse}}"></iron-ajax>
 
-<div class="layout horizontal end-justified">
-  <div>
-    <paper-button on-click="loginFormSubmit">Login</paper-button>
-  </div>
-</div>
-
-<div class="errorMessage">
-  {{errorMessage}}
-</div>   
+<paper-button on-click="loginFormSubmit">Login</paper-button>
+   
   </template>
 
   <script>
@@ -64,23 +49,11 @@ url$="https://lasallepub.com/scripts/login.php?email={{email}}&password={{passwo
           lresponse: {
             type: Number,
             notify: true,
-            observer: '_lresponseChanged',
-          }
-        },
-        
-        _lresponseChanged: function () {
-          if (this.lresponse == 1) {
-            this.errorMessage = "";
-          } else {
-            this.errorMessage = "Invalid email address or password.";
           }
         },
 
         loginFormSubmit: function() {
-          if (this.$.emailID.validate() && this.$.passwordID.validate()) {
-            this.$.loginAjax.generateRequest();
-          }
-         
+         this.$.loginAjax.generateRequest();
         }
       });
     })();
