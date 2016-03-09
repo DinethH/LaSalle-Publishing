@@ -2,6 +2,8 @@
 
 include_once ('db.php');
 
+require_once 'SimpleMail.php';
+
 $orderNumber = $_REQUEST['order'];
 
 
@@ -81,11 +83,43 @@ if (strcmp ($res, "VERIFIED") == 0) {
     $payer_email = $_POST['payer_email'];
     $custom = $_POST['custom'];
     
-    $order = $db->prepare("SELECT * FROM orders WHERE orderNumber=?");
+    $order = $db->prepare("SELECT * FROM orders WHERE orderNumber=? LIMIT 1");
     $order->execute(array($custom));
+    
+    
     if ($order->rowCount()) {
         // update
+        $rows = $order->fetchAll(PDO::FETCH_ASSOC);
         $stmtou = $db->exec("UPDATE orders SET payment = '$payment_status' WHERE orderNumber = '$custom'");
+   
+            $message =  "
+<div>
+    <h2>Thank you for your purchase!</h2>
+   
+    <h4>Subtotal: $$payment_amount</h4>
+    
+    <h3>Order Number: $custom</h3>
+    
+    <div>
+        <a href='https://lasallepub.com/#!/download'>Download</a>
+    </div>
+</div>            
+            ";
+            
+            
+            $mail = new SimpleMail();
+            $mail->setTo($receiver_email, $receiver_email)
+                 ->setSubject("LaSallePub Order # $custom")
+                 ->setFrom("no-reply@lasallepub.com", "No-Reply")
+                 ->addMailHeader('Reply-To', "no-reply@lasallepub.com", "No-Reply")
+                 ->addMailHeader('Bcc', 'dineth@sachintha.com', 'dineth@sachintha.com')
+                 ->addGenericHeader('X-Mailer', 'PHP/' . phpversion())
+                 ->addGenericHeader('Content-Type', 'text/html; charset="utf-8"')
+                 ->setMessage($message)
+                 ->setWrap(78);
+            $send = $mail->send();
+            
+            echo $send;
         //$stmtou->execute(array($payment_status, $custom));
     } else {
         //insert
