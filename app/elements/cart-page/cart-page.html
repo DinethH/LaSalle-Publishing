@@ -4,6 +4,7 @@
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
 <link rel="import" href="../../bower_components/iron-flex-layout/classes/iron-flex-layout.html">
 <link rel="import" href="../../bower_components/paper-button/paper-button.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
 
 
 <dom-module id="cart-page">
@@ -82,7 +83,7 @@
     </style>
     
     
-    <iron-ajax id="createOrder" url="https://lasallepub.com/scripts/create-order.php" last-response="{{order}}" auto></iron-ajax>
+    <iron-ajax id="createOrder" url$="https://lasallepub.com/scripts/create-order.php?email={{emailAddress}}" last-response="{{order}}" auto></iron-ajax>
    
     
     <iron-ajax id="cartData" url="https://lasallepub.com/scripts/get-cart.php" last-response="{{data}}" auto></iron-ajax>
@@ -123,6 +124,7 @@
     
     <div class="proceed-to-checkout">
       <div class="checkout-inner">
+        <paper-input id="emailAddress" error-message="Invalid email address." type="email" label="Email Address" value="{{emailAddress}}"></paper-input>
         <h3>Total: ${{total}}</h3>
         <paper-button on-tap="proceedToCheckout" id="proceedToCheckoutButton" raised>Checkout</paper-button>
       </div>
@@ -139,9 +141,9 @@
                     <input type="hidden" name="currency_code" value="USD">
                     <input type="hidden" name="amount" value="{{total}}">
                    <!-- <input type="hidden" name="first_name" value="{{name}}"> -->
-                    <input type="hidden" name="custom" value="Order Number: {{order}}">
-                    <input type="hidden" name="notify_url" value="https://lasallepub.com/scripts/order.php?order={{order}}">
-                    <input type="hidden" name="return" value="http://www.itsdineth.com">
+                    <input type="hidden" name="custom" value="{{order}}">
+                    <input type="hidden" name="notify_url" value="https://lasallepub.com/scripts/ipn.php?order={{order}}">
+                    <input type="hidden" name="return" value="https://lasallepub.com">
                 </form>
             <div>
   
@@ -174,7 +176,9 @@
           itemID: String,
           data2: {
             observer: '_data2Changed'
-          }
+          },
+          emailAddress: String,
+          errorMessage: String
         },
 
         _ccountChanged: function (newValue, oldValue) {
@@ -201,7 +205,10 @@
           
         },
         proceedToCheckout: function () {
-            this.querySelector('#buyItemForm').submit();
+            
+            if (this.emailAddress.length > 3 && this.$.emailAddress.validate()) {
+              this.querySelector('#buyItemForm').submit();
+            }
         }
       });
     })();

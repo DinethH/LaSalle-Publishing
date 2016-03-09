@@ -1,5 +1,10 @@
 <?php
 
+include_once ('db.php');
+
+$orderNumber = $_REQUEST['order'];
+
+
 //$db = new PDO('mysql:host=gator3320.hostgator.com;dbname=idineth_pwdgroups;charset=utf8', 'idineth_pwdgroup', 'trustnoone');
 // STEP 1: Read POST data
 
@@ -76,18 +81,18 @@ if (strcmp ($res, "VERIFIED") == 0) {
     $payer_email = $_POST['payer_email'];
     $custom = $_POST['custom'];
     
-    $order = $db->prepare("SELECT * FROM payments WHERE orderid=?");
+    $order = $db->prepare("SELECT * FROM orders WHERE orderNumber=?");
     $order->execute(array($custom));
     if ($order->rowCount()) {
         // update
-        $stmtou = $db->prepare("UPDATE payments SET payment_status=? WHERE orderid=?");
-        $stmtou->execute(array($payment_status, $custom));
+        $stmtou = $db->exec("UPDATE orders SET payment = '$payment_status' WHERE orderNumber = '$custom'");
+        //$stmtou->execute(array($payment_status, $custom));
     } else {
         //insert
-        $stmtoui = $db->prepare("INSERT INTO payments(orderid, payment_status) VALUES(:field1,:field2)");
-        $stmtoui->execute(array(':field1' => $custom, ':field2' => $payment_status));
+        //$stmtoui = $db->prepare("INSERT INTO orders(orderid, payment_status) VALUES(:field1,:field2)");
+        //$stmtoui->execute(array(':field1' => $custom, ':field2' => $payment_status));
     }
-    $stmtoui = $db->prepare("INSERT INTO payments(orderid, payment_status) VALUES(:field1,:field2)");
+    //$stmtoui = $db->prepare("INSERT INTO payments(orderid, payment_status) VALUES(:field1,:field2)");
 	// Insert your actions here
 
 } else if (strcmp ($res, "INVALID") == 0) {
