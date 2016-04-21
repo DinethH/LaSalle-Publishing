@@ -88,7 +88,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   
   <div class="container-desktop">
       <iron-ajax id="aproductsID" url="https://lasallepub.com/scripts/get-products-list.php" last-response="{{data}}" auto></iron-ajax>
-   
+      <iron-ajax id="deleteItem" url$="https://lasallepub.com/scripts/delete-item.php?id={{itemID}}" last-response="{{deleteResponse}}"></iron-ajax>
+ 
    <div class="products-wrapper">
       <template id="adminProductsID" is="dom-repeat" items="{{data}}">
         <div class="list-item">
@@ -130,6 +131,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           base: String,
           productID: String,
           itemID: String,
+          deleteResponse: {
+            observer: '_deleteResponseChanged'
+          },
+        },
+        
+        _deleteResponseChanged: function (oldValue, newValue) {
+          if (this.deleteResponse == 1) {
+            this.$.aproductsID.generateRequest();
+            this.deleteResponse = 0;
+          }
+          
         },
 
         foceRefresh: function() {
@@ -138,7 +150,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         deleteItem: function (e) {
           var itemIDO = this.$.adminProductsID.itemForElement(e.target);
           this.itemID = itemIDO.id;
-          console.log(this.itemID);
+          this.$.deleteItem.generateRequest();
         }
       });
     })();

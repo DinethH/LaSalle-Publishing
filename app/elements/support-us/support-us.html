@@ -59,12 +59,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       max-width: 1200px;
       margin: 0 auto;
     }
-    p {
+    p, .content {
       font-size: 20px;
     line-height: 30px;
     }
     
     </style>
+<iron-ajax auto url="https://lasallepub.com/scripts/get-static-content.php?q=contentSupport" last-response="{{contentSupport}}"></iron-ajax>
+
     
   <div class="header-image">
     
@@ -76,21 +78,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </div>
   </div>
   
-  <div class="container-desktop">
-    <div class="paras">
-        <p class="first">
-      THANK YOU for partnering with LaSalle Publishing in their mission to make sure seemingly complicated things are made simple!  
-    </p>
-    
-    <p>
-      We need your support for many upcoming speaking/musical engagements and products in development. Please consider partnering with LaSalle Publishing’s Support Team on a monthly basis with a recurring donation in any amount. To know exactly how your funds are being used, updates on new projects or an address to send a check or money order, please don’t hesitate to email <a href="mailto:info@lasallepub.com">info@lasallepub.com</a>  
-    </p>
-    
-    <p>When you choose to partner with us, you will receive new product samples, special partner-only event invites and a special newsletter detailing all the progress made.  </p>
-    <p>By the way, we really want to know who you are! After donating please send us a quick email letting us know who you are so we can connect with you. </p>
-    <p>We are beyond grateful for your support and every gift matters no matter how great or how small. What we do would not be possible without your contributions.  </p>
-  
-    </div>
+  <div id="containerS" class="container-desktop content">
+    <!-- content -->
   </div>
 
    
@@ -107,9 +96,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           items: {
             type: Array,
             notify: true,
-          }
+          },
+          contentSupport: {
+            observer: '_contentSupportChanged'
+          },
+          contentSupportHTML: String
         },
 
+        _contentSupportChanged: function (contentSupport, oldValue) {
+          this.contentSupportHTML = this.contentSupport;
+          document.getElementById("containerS").innerHTML = this.contentSupportHTML;
+        },
+        
         ready: function() {
          
         }

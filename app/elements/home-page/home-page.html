@@ -99,6 +99,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
    <iron-image src="../../images/acoustic-guitar-for-beginners.jpg" sizing="cover"></iron-image>
 
  -->
+
+<iron-ajax auto url="https://lasallepub.com/scripts/get-static-content.php?q=slideTitle1" last-response="{{slideTitle1}}"></iron-ajax>
+<iron-ajax auto url="https://lasallepub.com/scripts/get-static-content.php?q=slideTitle2" last-response="{{slideTitle2}}"></iron-ajax>
+<iron-ajax auto url="https://lasallepub.com/scripts/get-static-content.php?q=slideTitle3" last-response="{{slideTitle3}}"></iron-ajax>
+
  
  <div class="layout vertical home-wrapper">
    
@@ -112,7 +117,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <div class="layout vertical tag-wrapper">
                 <div class="flex"></div>
                 <div class="home-header">
-                  <h2>Play guitar in 30 days or your money back.</h2>
+                  <h2>{{slideTitle1}}</h2>
                 </div>
               </div>
             </neon-animated-pages>
@@ -125,7 +130,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <div class="layout vertical tag-wrapper">
                 <div class="flex"></div>
                 <div class="home-header">
-                  <h2>Play guitar in 30 days or your money back.</h2>
+                  <h2>{{slideTitle2}}</h2>
                 </div>
               </div>
             </neon-animated-pages>
@@ -138,7 +143,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               <div class="layout vertical tag-wrapper">
                 <div class="flex"></div>
                 <div class="home-header">
-                  <h2>Play guitar in 30 days or your money back.</h2>
+                  <h2>{{slideTitle3}}</h2>
                 </div>
               </div>
             </neon-animated-pages>

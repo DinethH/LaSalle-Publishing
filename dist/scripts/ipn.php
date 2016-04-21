@@ -1,5 +1,12 @@
 <?php
 
+include_once ('db.php');
+
+require_once 'SimpleMail.php';
+
+$orderNumber = $_REQUEST['order'];
+
+
 //$db = new PDO('mysql:host=gator3320.hostgator.com;dbname=idineth_pwdgroups;charset=utf8', 'idineth_pwdgroup', 'trustnoone');
 // STEP 1: Read POST data
 
@@ -31,7 +38,7 @@ foreach ($myPost as $key => $value) {
 
 // STEP 2: Post IPN data back to paypal to validate
 
-$ch = curl_init('https://www.sandbox.paypal.com/cgi-bin/webscr'); // change to [...]sandbox.paypal[...] when using sandbox to test
+$ch = curl_init('https://www.paypal.com/cgi-bin/webscr'); // change to [...]sandbox.paypal[...] when using sandbox to test
 curl_setopt($ch, CURLOPT_HTTP_VERSION, CURL_HTTP_VERSION_1_1);
 curl_setopt($ch, CURLOPT_POST, 1);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER,1);
@@ -76,18 +83,50 @@ if (strcmp ($res, "VERIFIED") == 0) {
     $payer_email = $_POST['payer_email'];
     $custom = $_POST['custom'];
     
-    $order = $db->prepare("SELECT * FROM payments WHERE orderid=?");
+    $order = $db->prepare("SELECT * FROM orders WHERE orderNumber=? LIMIT 1");
     $order->execute(array($custom));
+    
+    
     if ($order->rowCount()) {
         // update
-        $stmtou = $db->prepare("UPDATE payments SET payment_status=? WHERE orderid=?");
-        $stmtou->execute(array($payment_status, $custom));
+        $rows = $order->fetchAll(PDO::FETCH_ASSOC);
+        $stmtou = $db->exec("UPDATE orders SET payment = '$payment_status' WHERE orderNumber = '$custom'");
+   
+            $message =  "
+<div>
+    <h2>Thank you for your purchase!</h2>
+   
+    <h4>Subtotal: $$payment_amount</h4>
+    
+    <h3>Order Number: $custom</h3>
+    
+    <div>
+        <a href='https://lasallepub.com/#!/download'>Download</a>
+    </div>
+</div>            
+            ";
+            
+            
+            $mail = new SimpleMail();
+            $mail->setTo($receiver_email, $receiver_email)
+                 ->setSubject("LaSallePub Order # $custom")
+                 ->setFrom("no-reply@lasallepub.com", "No-Reply")
+                 ->addMailHeader('Reply-To', "no-reply@lasallepub.com", "No-Reply")
+                 ->addMailHeader('Bcc', 'dineth@sachintha.com', 'dineth@sachintha.com')
+                 ->addGenericHeader('X-Mailer', 'PHP/' . phpversion())
+                 ->addGenericHeader('Content-Type', 'text/html; charset="utf-8"')
+                 ->setMessage($message)
+                 ->setWrap(78);
+            $send = $mail->send();
+            
+            echo $send;
+        //$stmtou->execute(array($payment_status, $custom));
     } else {
         //insert
-        $stmtoui = $db->prepare("INSERT INTO payments(orderid, payment_status) VALUES(:field1,:field2)");
-        $stmtoui->execute(array(':field1' => $custom, ':field2' => $payment_status));
+        //$stmtoui = $db->prepare("INSERT INTO orders(orderid, payment_status) VALUES(:field1,:field2)");
+        //$stmtoui->execute(array(':field1' => $custom, ':field2' => $payment_status));
     }
-    $stmtoui = $db->prepare("INSERT INTO payments(orderid, payment_status) VALUES(:field1,:field2)");
+    //$stmtoui = $db->prepare("INSERT INTO payments(orderid, payment_status) VALUES(:field1,:field2)");
 	// Insert your actions here
 
 } else if (strcmp ($res, "INVALID") == 0) {

@@ -7,6 +7,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="generator" content="LeSalle Publishing">
   <title>LaSalle Publishing</title>
+  
+  <meta name="description" content="LaSalle is a publishing company dedicated to making things such as learning a musical instrument, science topics like physics or chemistry and math less complicated. Bringing you books and videos that will show you what we believe to be the most efficient way to learn. You can incorporate our materials as a study aid to school studies or use in hobby time.">
+  <meta name="keywords" content="learn-guitar,simple guitar,guitar-tutorials">
 
   <!-- Place favicon.ico in the `app/` directory -->
 
@@ -66,6 +69,11 @@
   <template is="dom-bind" id="app">
     
     <iron-media-query query="(min-width: 600px)" query-matches="{{queryMatches}}"></iron-media-query>
+
+    <iron-ajax auto url="https://lasallepub.com/scripts/get-static-content.php?q=subtitle" last-response="{{subtitle}}"></iron-ajax>
+    <iron-ajax auto url="https://lasallepub.com/scripts/get-static-content.php?q=linkInstagram" last-response="{{linkInstagram}}"></iron-ajax>
+    <iron-ajax auto url="https://lasallepub.com/scripts/get-static-content.php?q=linkTwitter" last-response="{{linkTwitter}}"></iron-ajax>
+    <iron-ajax auto url="https://lasallepub.com/scripts/get-static-content.php?q=linkFacebook" last-response="{{linkFacebook}}"></iron-ajax>
 
 
     <paper-drawer-panel id="paperDrawerPanel" responsive-width="6000px">
@@ -192,7 +200,9 @@
 
           <!-- Application sub title -->
           <div class="bottom bottom-container application-subtitle-desktop">
-            <div class="bottom-title">Making complicated things, simple.</div>
+            <div class="bottom-title">
+              {{subtitle}}
+            </div>
           </div>
         </paper-toolbar>
 
@@ -240,13 +250,13 @@
           <footer class="flex-end-align">
             <div class="footer-inner">
                 <p>
-                  <a title="Instagram" target="_blank" class="social-media" href="https://www.instagram.com/lasallepublishing/">
+                  <a title="Instagram" target="_blank" class="social-media" href="{{linkInstagram}}">
                     <img   src="images/icons/64/instagram.png">
                   </a>
-                  <a title="Twitter" target="_blank" class="social-media" href="https://twitter.com/LaSallePub">
+                  <a title="Twitter" target="_blank" class="social-media" href="{{linkTwitter}}">
                     <img  src="images/icons/64/twitter.png">
                   </a>
-                  <a title="Facebook" target="_blank" class="social-media" href="https://facebook.com">
+                  <a title="Facebook" target="_blank" class="social-media" href="{{linkFacebook}}">
                     <img  src="images/icons/64/facebook.png">
                   </a>
                 </p>

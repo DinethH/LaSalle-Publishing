@@ -16695,7 +16695,7 @@ module.exports = Array.isArray || function (arr) {
 
     // add #! before urls
     page({
-      hashbang: true
+      hashbang: false
     });
 
   });
@@ -18707,7 +18707,7 @@ iron-pages:after {
               <div class="layout vertical tag-wrapper">
                 <div class="flex"></div>
                 <div class="home-header">
-                  <h2>Play guitar in 30 days or your money back.</h2>
+                  <h2>Learn to play guitar in 30 days or your money back and keep the purchase!</h2>
                 </div>
               </div>
             </neon-animated-pages>
@@ -18719,7 +18719,7 @@ iron-pages:after {
               <div class="layout vertical tag-wrapper">
                 <div class="flex"></div>
                 <div class="home-header">
-                  <h2>Page 2</h2>
+                  <h2>Learn to play guitar in 30 days or your money back and keep the purchase!</h2>
                 </div>
               </div>
             </neon-animated-pages>
@@ -18731,7 +18731,7 @@ iron-pages:after {
               <div class="layout vertical tag-wrapper">
                 <div class="flex"></div>
                 <div class="home-header">
-                  <h2>Page 3</h2>
+                  <h2>Learn to play guitar in 30 days or your money back and keep the purchase!</h2>
                 </div>
               </div>
             </neon-animated-pages>
@@ -18807,6 +18807,9 @@ iron-pages:after {
         .header-image {
           height: 300px;
         }
+      }
+      
+      @media (max-width: 1200px) {
         p {
           padding: 20px;
         }
@@ -18898,12 +18901,12 @@ iron-pages:after {
         .header-image {
           height: 300px;
         }
-        p.first {
-          padding-top: 20px;
-        }
-        p {
-          padding-left: 20px;
-          padding-right: 20px;
+
+      }
+      
+      @media (max-width: 1200px) {
+        .paras {
+          padding: 20px;
         }
       }
       
@@ -18940,9 +18943,10 @@ iron-pages:after {
     </div>
   </div>
   
-  <div class="container-desktop" s="">
-    <p class="first">
-      THANK YOU for partnering with LaSalle Publishing in their mission to make sure seemingly complicated things are made simple!  
+  <div class="container-desktop">
+    <div class="paras">
+        <p class="first">
+      THANK YOU for partnering with LaSalle Publishing in their mission to make sure complicated things are made simple!  
     </p>
     
     <p>
@@ -18952,6 +18956,8 @@ iron-pages:after {
     <p>When you choose to partner with us, you will receive new product samples, special partner-only event invites and a special newsletter detailing all the progress made.  </p>
     <p>By the way, we really want to know who you are! After donating please send us a quick email letting us know who you are so we can connect with you. </p>
     <p>We are beyond grateful for your support and every gift matters no matter how great or how small. What we do would not be possible without your contributions.  </p>
+  
+    </div>
   </div>
 
    
@@ -22241,207 +22247,6 @@ if (!window.Promise) {
     })();
   </script>
 </dom-module>
-<dom-module id="cart-page" assetpath="cart-page/">
-  <template>
-    <style>
-      :host {
-        display: block;
-      }
-
-    .container-desktop {
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .product-image {
-      width: 100px;
-    }
-    
-    paper-material {
-      margin: 20px;
-      padding: 15px;
-    }
-    paper-button {
-      background: orange;
-      color: white;
-    }    
-    .product-title {
-      font-weight: bold;
-      
-    }
-    .product-details {
-      padding-left: 25px;
-    }
-    .product-price {
-      color: #666;
-      padding-top: 20px;
-    }
-    paper-toast {
-     --paper-toast-background-color: red;
-    }
-    .proceed-to-checkout {
-      text-align: left;
-      padding: 15px;
-    }
-    #proceedToCheckoutButton {
-      margin-left: 0px;
-    }
-    
-    @media (max-width: 600px) {
-      .proceed-to-checkout {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    margin: 0 auto;
-    width: calc(100vw);
-    text-align: right;
-    z-index: 1000;
-    background: orange;
-      }
-      
-      .proceed-to-checkout h3 {
-        display: inline;
-        padding-right: 20px;
-      }
-      .proceed-to-checkout paper-button {
-        background: white;
-      }
-      paper-button {
-        background: white;
-        color: black;
-      }
-      .checkout-inner {
-        padding-right: 30px;
-      }
-    }
-    
-    </style>
-    
-    
-    <iron-ajax id="createOrder" url="https://lasallepub.com/scripts/create-order.php" last-response="{{order}}" auto=""></iron-ajax>
-   
-    
-    <iron-ajax id="cartData" url="https://lasallepub.com/scripts/get-cart.php" last-response="{{data}}" auto=""></iron-ajax>
- 
-    <iron-ajax id="deleteItem" url$="https://lasallepub.com/scripts/cart-delete.php?id={{itemID}}" last-response="{{data2}}"></iron-ajax>
-
-
-  <div class="container-desktop layout horizontal">
-    
-
-
-    <div class="flex">
-      <template id="cartItems" is="dom-repeat" items="{{data}}">
-        <paper-material elevation="1">
-          <div class="layout horizontal">
-            <div>
-              <img class="product-image" src$="https://lasallepub.com/images/products/{{item.img}}">
-            </div>
-            <div class="product-details layout vertical">
-              <div class="product-title">
-                {{item.name}}
-              </div>
-              <div class="product-price">
-                ${{item.price}}
-              </div>
-            </div>
-            <div class="flex"></div>
-            <div>
-              <paper-icon-button on-tap="deletItem" id="deleteItemButton" icon="delete"></paper-icon-button>
-            </div>
-            
-            
-          </div>
-        </paper-material>
-      </template>
-    </div>
-    
-    
-    <div class="proceed-to-checkout">
-      <div class="checkout-inner">
-        <h3>Total: ${{total}}</h3>
-        <paper-button on-tap="proceedToCheckout" id="proceedToCheckoutButton" raised="">Checkout</paper-button>
-      </div>
-    </div>
-  </div>
-  
-  
-            <div class="buy-button" on-click="buyItem">
-                <form id="buyItemForm" action="https://www.sandbox.paypal.com/cgi-bin/webscr" method="post">
-                    <input type="hidden" name="cmd" value="_ext-enter">
-                    <input type="hidden" name="redirect_cmd" value="_xclick">
-                    <input type="hidden" name="item_name" value="LaSalle Publishing">
-                    <input type="hidden" name="business" value="dineth3-facilitator@sachintha.com">
-                    <input type="hidden" name="currency_code" value="USD">
-                    <input type="hidden" name="amount" value="{{total}}">
-                   
-                    <input type="hidden" name="custom" value="Order Number: {{order}}">
-                    <input type="hidden" name="notify_url" value="https://lasallepub.com/scripts/order.php?order={{order}}">
-                    <input type="hidden" name="return" value="http://www.itsdineth.com">
-                </form>
-            <div>
-  
-  <iron-ajax id="countCart" url="https://lasallepub.com/scripts/cart-count.php" last-response="{{ccount}}"></iron-ajax>
-  
-  <iron-ajax id="totalCart" url="https://lasallepub.com/scripts/cart-total.php" last-response="{{total}}"></iron-ajax>
-  
-  
-  <paper-toast id="deleteCartToast" text="Item has been removed from the cart!"></paper-toast>
-   
-  </div></div></template>
-
-  <script>
-    (function() {
-      'use strict';
-
-      Polymer({
-        is: 'cart-page',
-
-        properties: {
-          items: {
-            type: Array,
-            notify: true,
-          },
-          ccount: {
-            type: String,
-            notify: true,
-            observer: '_ccountChanged'
-          },
-          itemID: String,
-          data2: {
-            observer: '_data2Changed'
-          }
-        },
-
-        _ccountChanged: function (newValue, oldValue) {
-          this.$.cartData.generateRequest();
-          this.$.totalCart.generateRequest(); 
-          this.$.createOrder.generateRequest(); 
-
-        },
-        _data2Changed: function (newValue, oldValue) {
-          this.$.countCart.generateRequest();
-          this.$.countCart.generateRequest();
-          this.$.countCart.generateRequest();
-          this.$.countCart.generateRequest();
-          this.$.countCart.generateRequest();
-        },
-        deletItem: function(e) {
-          var itemIDO = this.$.cartItems.itemForElement(e.target);
-          this.itemID = itemIDO.id;
-          this.$.deleteItem.generateRequest();
-          this.$.deleteCartToast.open();
-          if (this.ccount == 1) {
-            window.location = "https://lasallepub.com"
-          }
-          
-        },
-        proceedToCheckout: function () {
-            this.querySelector('#buyItemForm').submit();
-        }
-      });
-    })();
-  </script>
-</dom-module>
 <script>
   /**
   Polymer.IronFormElementBehavior enables a custom element to be included
@@ -24112,6 +23917,213 @@ is separate from validation, and `allowed-pattern` does not affect how the input
     ]
   });
 </script>
+<dom-module id="cart-page" assetpath="cart-page/">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+    .container-desktop {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .product-image {
+      width: 100px;
+    }
+    
+    paper-material {
+      margin: 20px;
+      padding: 15px;
+    }
+    paper-button {
+      background: orange;
+      color: white;
+    }    
+    .product-title {
+      font-weight: bold;
+      
+    }
+    .product-details {
+      padding-left: 25px;
+    }
+    .product-price {
+      color: #666;
+      padding-top: 20px;
+    }
+    paper-toast {
+     --paper-toast-background-color: red;
+    }
+    .proceed-to-checkout {
+      text-align: left;
+      padding: 15px;
+    }
+    #proceedToCheckoutButton {
+      margin-left: 0px;
+    }
+    
+    @media (max-width: 600px) {
+      .proceed-to-checkout {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    margin: 0 auto;
+    width: calc(100vw);
+    text-align: right;
+    z-index: 1000;
+    background: orange;
+      }
+      
+      .proceed-to-checkout h3 {
+        display: inline;
+        padding-right: 20px;
+      }
+      .proceed-to-checkout paper-button {
+        background: white;
+      }
+      paper-button {
+        background: white;
+        color: black;
+      }
+      .checkout-inner {
+        padding-right: 30px;
+      }
+    }
+    
+    </style>
+    
+    
+    <iron-ajax id="createOrder" url$="https://lasallepub.com/scripts/create-order.php?email={{emailAddress}}" last-response="{{order}}" auto=""></iron-ajax>
+   
+    
+    <iron-ajax id="cartData" url="https://lasallepub.com/scripts/get-cart.php" last-response="{{data}}" auto=""></iron-ajax>
+ 
+    <iron-ajax id="deleteItem" url$="https://lasallepub.com/scripts/cart-delete.php?id={{itemID}}" last-response="{{data2}}"></iron-ajax>
+
+
+  <div class="container-desktop layout horizontal">
+    
+
+
+    <div class="flex">
+      <template id="cartItems" is="dom-repeat" items="{{data}}">
+        <paper-material elevation="1">
+          <div class="layout horizontal">
+            <div>
+              <img class="product-image" src$="https://lasallepub.com/images/products/{{item.img}}">
+            </div>
+            <div class="product-details layout vertical">
+              <div class="product-title">
+                {{item.name}}
+              </div>
+              <div class="product-price">
+                ${{item.price}}
+              </div>
+            </div>
+            <div class="flex"></div>
+            <div>
+              <paper-icon-button on-tap="deletItem" id="deleteItemButton" icon="delete"></paper-icon-button>
+            </div>
+            
+            
+          </div>
+        </paper-material>
+      </template>
+    </div>
+    
+    
+    <div class="proceed-to-checkout">
+      <div class="checkout-inner">
+        <paper-input id="emailAddress" error-message="Invalid email address." type="email" label="Email Address" value="{{emailAddress}}"></paper-input>
+        <h3>Total: ${{total}}</h3>
+        <paper-button on-tap="proceedToCheckout" id="proceedToCheckoutButton" raised="">Checkout</paper-button>
+      </div>
+    </div>
+  </div>
+  
+  
+            <div class="buy-button" on-click="buyItem">
+                <form id="buyItemForm" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+                    <input type="hidden" name="cmd" value="_ext-enter">
+                    <input type="hidden" name="redirect_cmd" value="_xclick">
+                    <input type="hidden" name="item_name" value="LaSalle Publishing - Order: {{order}}">
+                    <input type="hidden" name="business" value="whiten.bobby@gmail.com ">
+                    <input type="hidden" name="currency_code" value="USD">
+                    <input type="hidden" name="amount" value="{{total}}">
+                   
+                    <input type="hidden" name="custom" value="{{order}}">
+                    <input type="hidden" name="notify_url" value="https://lasallepub.com/scripts/ipn.php?order={{order}}">
+                    <input type="hidden" name="return" value="https://lasallepub.com/thankyou.html">
+                </form>
+            <div>
+  
+  <iron-ajax id="countCart" url="https://lasallepub.com/scripts/cart-count.php" last-response="{{ccount}}"></iron-ajax>
+  
+  <iron-ajax id="totalCart" url="https://lasallepub.com/scripts/cart-total.php" last-response="{{total}}"></iron-ajax>
+  
+  
+  <paper-toast id="deleteCartToast" text="Item has been removed from the cart!"></paper-toast>
+   
+  </div></div></template>
+
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'cart-page',
+
+        properties: {
+          items: {
+            type: Array,
+            notify: true,
+          },
+          ccount: {
+            type: String,
+            notify: true,
+            observer: '_ccountChanged'
+          },
+          itemID: String,
+          data2: {
+            observer: '_data2Changed'
+          },
+          emailAddress: String,
+          errorMessage: String
+        },
+
+        _ccountChanged: function (newValue, oldValue) {
+          this.$.cartData.generateRequest();
+          this.$.totalCart.generateRequest(); 
+          this.$.createOrder.generateRequest(); 
+
+        },
+        _data2Changed: function (newValue, oldValue) {
+          this.$.countCart.generateRequest();
+          this.$.countCart.generateRequest();
+          this.$.countCart.generateRequest();
+          this.$.countCart.generateRequest();
+          this.$.countCart.generateRequest();
+        },
+        deletItem: function(e) {
+          var itemIDO = this.$.cartItems.itemForElement(e.target);
+          this.itemID = itemIDO.id;
+          this.$.deleteItem.generateRequest();
+          this.$.deleteCartToast.open();
+          if (this.ccount == 1) {
+            window.location = "https://lasallepub.com"
+          }
+          
+        },
+        proceedToCheckout: function () {
+            
+            if (this.emailAddress.length > 3 && this.$.emailAddress.validate()) {
+              this.querySelector('#buyItemForm').submit();
+            }
+        }
+      });
+    })();
+  </script>
+</dom-module>
 
 
 <dom-module id="iron-autogrow-textarea" assetpath="../bower_components/iron-autogrow-textarea/">
@@ -26021,7 +26033,8 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
   
   <div class="container-desktop">
       <iron-ajax id="aproductsID" url="https://lasallepub.com/scripts/get-products-list.php" last-response="{{data}}" auto=""></iron-ajax>
-   
+      <iron-ajax id="deleteItem" url$="https://lasallepub.com/scripts/delete-item.php?id={{itemID}}" last-response="{{deleteResponse}}"></iron-ajax>
+ 
    <div class="products-wrapper">
       <template id="adminProductsID" is="dom-repeat" items="{{data}}">
         <div class="list-item">
@@ -26063,6 +26076,17 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
           base: String,
           productID: String,
           itemID: String,
+          deleteResponse: {
+            observer: '_deleteResponseChanged'
+          },
+        },
+        
+        _deleteResponseChanged: function (oldValue, newValue) {
+          if (this.deleteResponse == 1) {
+            this.$.aproductsID.generateRequest();
+            this.deleteResponse = 0;
+          }
+          
         },
 
         foceRefresh: function() {
@@ -26071,7 +26095,7 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
         deleteItem: function (e) {
           var itemIDO = this.$.adminProductsID.itemForElement(e.target);
           this.itemID = itemIDO.id;
-          console.log(this.itemID);
+          this.$.deleteItem.generateRequest();
         }
       });
     })();
@@ -26138,16 +26162,28 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
     
     .order-wrapper {
       max-width: 500px;
-      padding: 20px;
       margin: 0 auto;
+      //border: 1px solid #333;
+      margin-top: 20px;
+      //border-radius: 3px;
+      padding: 30px;
+      box-shadow: 1px 1px 5px #ccc;
+      background: rgb(255,175,75);
+      background: -moz-linear-gradient(top,  rgba(255,175,75,1) 0%, rgba(255,146,10,1) 100%);
+      background: -webkit-linear-gradient(top,  rgba(255,175,75,1) 0%,rgba(255,146,10,1) 100%);
+      background: linear-gradient(to bottom,  rgba(255,175,75,1) 0%,rgba(255,146,10,1) 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffaf4b', endColorstr='#ff920a',GradientType=0 );
+      color: white;
+
     }
     
     .download-reader-banner {
       width: 100%;
-      height: 200px;
+      //height: 200px;
       //background: rgba(200,155,155,1);
       margin-bottom: 20px;
       text-align: center;
+     
     }
     .download-reader-banner img {
       width: 90%;
@@ -26177,6 +26213,10 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
       .product-image {
         width: 80px;
       }
+      .order-wrapper {
+        margin-left: 10px;
+        margin-right: 10px;  
+      }
     }
     
     #downloadAllButton {
@@ -26194,6 +26234,15 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
       text-align: left;
       font-weight: bold;
       padding: 10px;
+    }
+    
+    paper-input {
+      width: 200px;
+      margin: 0 auto;
+      --paper-input-container-color: #fff;
+    }
+    paper-button {
+      margin-top: 20px;
     }
     
     </style>
@@ -26220,23 +26269,10 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
   
   
   
-  <hr style="margin-left: 20px; margin-right: 20px;">
-  
   <div>
-    <div class="download-reader-banner">
-      <h2>eBook Reader</h2>
-      <div>
-        <iron-icon icon="icons:file-download"></iron-icon>
-      </div>
-      <div>
-        <a target="_blank" title="Download Calibre" href="http://calibre-ebook.com/">
-          <img src="https://lasallepub.com/images/ebookm.png">
-        </a>
-      </div>
-    </div>
+    
     
     <div style="padding: 20px;">
-      <br><br><br><br><br>
       
       <template id="orderItems" is="dom-repeat" items="{{orders}}">
         <paper-material elevation="1" class="layout horizontal" style="margin-bottom: 20px;">
@@ -26248,10 +26284,10 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
           </div>
           <div class="layout horizontal">
             <div>
-              <paper-icon-button icon="av:library-books" on-click="downloadEbook"></paper-icon-button>
+              <paper-icon-button title="Download eBook" icon="av:library-books" on-click="downloadEbook"></paper-icon-button>
             </div>
             <div>
-              <paper-icon-button icon="av:videocam" on-click="downloadVideo"></paper-icon-button>
+              <paper-icon-button title="Download Video" icon="av:videocam" on-click="downloadVideo"></paper-icon-button>
             </div>
           </div>
         </paper-material>
@@ -26259,20 +26295,29 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
       
       
       <div class="layout horizontal end-justified">
-        <paper-button id="downloadAllButton" on-click="downloadAll">Download All</paper-button>
+        <paper-button id="downloadAllButton" on-click="downloadAll">
+          <iron-icon icon="icons:file-download"></iron-icon>
+          Download All</paper-button>
       </div>
       
+    </div>
+    
+    <div class="download-reader-banner">
+      <h2>eBook Reader</h2>
+      <div>
+        <iron-icon icon="icons:file-download"></iron-icon>
+      </div>
+      <div>
+        <a target="_blank" title="Download Calibre" href="http://calibre-ebook.com/">
+          <img src="https://lasallepub.com/images/ebookm.png">
+        </a>
+      </div>
     </div>
 
     
   </div>
   
 </div>
-
-<br>
-<br>
-<br>
-
 
   </template>
 

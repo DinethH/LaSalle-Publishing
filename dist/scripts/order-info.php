@@ -8,7 +8,7 @@ $orderNumber = $_REQUEST['orderNumber'];
 
 $stmt = $db->query("SELECT * 
           FROM orders 
-         WHERE orderNumber = '$orderNumber' AND payment = 'paypal'");
+         WHERE orderNumber = '$orderNumber' AND payment = 'Completed'");
          
 $rows = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

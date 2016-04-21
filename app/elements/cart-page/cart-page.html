@@ -136,14 +136,14 @@
                 <form id="buyItemForm" action="https://www.paypal.com/cgi-bin/webscr" method="post">
                     <input type="hidden" name="cmd" value="_ext-enter">
                     <input type="hidden" name="redirect_cmd" value="_xclick">
-                    <input type="hidden" name="item_name" value="LaSalle Publishing">
+                    <input type="hidden" name="item_name" value="LaSalle Publishing - Order: {{order}}">
                     <input type="hidden" name="business" value="whiten.bobby@gmail.com ">
                     <input type="hidden" name="currency_code" value="USD">
                     <input type="hidden" name="amount" value="{{total}}">
                    <!-- <input type="hidden" name="first_name" value="{{name}}"> -->
                     <input type="hidden" name="custom" value="{{order}}">
                     <input type="hidden" name="notify_url" value="https://lasallepub.com/scripts/ipn.php?order={{order}}">
-                    <input type="hidden" name="return" value="https://lasallepub.com">
+                    <input type="hidden" name="return" value="https://lasallepub.com/thankyou.html">
                 </form>
             <div>
   
