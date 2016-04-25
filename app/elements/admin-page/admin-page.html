@@ -9,17 +9,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../bower_components/paper-styles/typography.html">
-<link rel="import" href="../../bower_components/paper-input/paper-input.html">
-<link rel="import" href="../../bower_components/paper-input/paper-textarea.html">
-<link rel="import" href="../../bower_components/file-upload/file-upload.html">
-<link rel="import" href="../../bower_components/iron-ajax/iron-ajax.html">
-<link rel="import" href="../../bower_components/paper-fab/paper-fab.html">
-<link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
-<link rel="import" href="../../bower_components/paper-dialog-scrollable/paper-dialog-scrollable.html">
-<link rel="import" href="../../bower_components/neon-animation/animations/scale-up-animation.html">
-<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tabs.html">
+<link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="../admin-products/admin-products.html">
+
 
 <dom-module id="admin-page">
   <template>
@@ -34,108 +28,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       padding: 20px;
     }
     
-    file-upload {
-      margin: 0;
-      padding: 0;
-      
+    paper-tabs {
+      --paper-tabs-selection-bar-color: #666;
+      --paper-tabs-selection-bar: #ccc;
+      --paper-tabs: #000;
     }
-    
-    paper-fab {
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-    }
-    
-    paper-dialog {
-      width: 600px;
-      padding: 20px;
-    }
-    h2 {
-      margin: 0;
-      padding: 0;
-    }
-    
-    .loginSection {
-      margin: 0 auto;
-      max-width: 500px;
-      padding: 15px;
-    }
-    
-    @media (max-width: 600px) {
-      paper-dialog {
-        width: 100vw;
-        height: 100vh;
-        padding: 20px;
-      }
-      paper-dialog-scrollable {
-         width: 100vw;
-            
-      }
-
-    }
-    
- 
-   
     </style>
     
-    
-    <iron-ajax id="checkAdminSessionAjax" url="https://lasallepub.com/scripts/check-admin-session.php" last-response="{{adminSession}}" auto></iron-ajax>
-
-
-    
-    
-<paper-dialog autoFitOnAttach id="addItemDialog" entry-animation="scale-up-animation"
-              exit-animation="fade-out-animation">
-  
-  <paper-dialog-scrollable>
-    <h2>Add New Product</h2>
-        <paper-input label="Product title" value="{{title}}"></paper-input>
-          <paper-textarea label="Product description" value="{{description}}"></paper-textarea>
-          <paper-input type="number" label="Price" value="{{price}}"></paper-input>
-          
-          <file-upload target="https://lasallepub.com/scripts/upload-file.php?type=cover" method="POST">Cover</file-upload>
-          <file-upload target="https://lasallepub.com/scripts/upload-file.php?type=ebook" method="POST">eBook</file-upload>
-          <file-upload target="https://lasallepub.com/scripts/upload-file.php?type=video" method="POST">Video</file-upload>
-    
-          
-    
-
-  </paper-dialog-scrollable>
-  <div class="buttons">
-    <paper-button on-click="addItem">Save</paper-button>
-  </div>
-</paper-dialog>
-    
-    
+     <paper-tabs selected="{{selected}}">
+      <paper-tab>Products</paper-tab>
+      <paper-tab>Blog</paper-tab>
+      <paper-tab>Misc Content</paper-tab>
+    </paper-tabs>   
     <div class="container-desktop">
       
-<iron-pages id="ironPages" selected="-1">
-  <div class="loginSection">
-    
-    <h2>Login</h2>
-    <login-form lresponse="{{loginResponse}}"></login-form>
-  </div>
-  <div>
-      <aproducts-page id="aproducts"></aproducts-page>
-  </div>
 
-</iron-pages>
-      
     
-      
+    
+    <iron-pages selected="{{selected}}">
+      <div>
+        
+        <admin-products></admin-products>
+        
+      </div>
+      <div>Two</div>
+      <div>Three</div>
+    </iron-pages>
 
-      
     </div>
     
-    <paper-fab id="addItemID" on-click="addItemDialogToggle" icon="add"></paper-fab>
     
-    
-    
-    
-  <iron-ajax id="addItemAjax" url$="https://lasallepub.com/scripts/add-item.php?title={{title}}&cover={{cover}}&backdrop={{backdrop}}&description={{description}}&price={{price}}&ebook={{ebook}}&video={{video}}" last-response="{{addItemResponse}}"></iron-ajax>
 
-  <paper-toast id="addItemToast" text="Item added successfully!"></paper-toast>
-   
    
   </template>
 
@@ -151,54 +74,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type: Array,
             notify: true,
           },
-          addItemResponse: {
-            observer: '_cartResponseChanged'
-          },
-          ImageContent: String,
-          Image: String,
-          loginResponse: {
-            type: Number,
-            observer: '_loginResponseChanged'
-          },
-          adminSession: {
-            type: Number,
-            observer: '_adminSessionChanged'
-          }
         },
-        _adminSessionChanged: function () {
-          if (this.adminSession == 1) {
-            this.$.ironPages.select(1);
-            this.$.addItemID.style.display = "block";
-          } else if (this.adminSession == 0) {
-            this.$.ironPages.select(0);
-            this.$.addItemID.style.display = "none";
-          }
-        },
-        _loginResponseChanged: function () {
-          if (this.loginResponse == 1) {
-            this.$.ironPages.select(1);
-            this.$.addItemID.style.display = "block";
-          }
-        },
-        _cartResponseChanged: function () {
-          this.$.addItemToast.open();
-          this.title = "";
-          this.description = "";
-          this.price = "";
-          this.cover = "";
-          this.backdrop = "";
-          this.ebook = "";
-          this.video = "";
-        },
-        addItem: function () {
-          if (this.title.length > 0 && this.description.length > 0 && this.price.length > 0) {
-            this.$.addItemAjax.generateRequest();
-            this.$.aproducts.foceRefresh();
-            this.$.addItemDialog.close();
-          }
-        },
-        addItemDialogToggle: function () {
-          this.$.addItemDialog.open();
+        attached: function () {
+          this.selected = 0;
         }
       });
     })();
