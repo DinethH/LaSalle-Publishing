@@ -13,6 +13,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/paper-tabs/paper-tab.html">
 <link rel="import" href="../../bower_components/iron-pages/iron-pages.html">
 <link rel="import" href="../admin-products/admin-products.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../admin-misc/admin-misc.html">
 
 
 <dom-module id="admin-page">
@@ -52,7 +54,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         
       </div>
       <div>Two</div>
-      <div>Three</div>
+      <div>
+        <admin-misc></admin-misc>
+      </div>
     </iron-pages>
 
     </div>
@@ -76,7 +80,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           },
         },
         attached: function () {
-          this.selected = 0;
+          this.selected = 2;
         }
       });
     })();
