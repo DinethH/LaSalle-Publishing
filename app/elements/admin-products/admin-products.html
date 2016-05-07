@@ -79,7 +79,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </style>
     
     
-    <iron-ajax id="checkAdminSessionAjax" url="https://lasallepub.com/scripts/check-admin-session.php" last-response="{{adminSession}}" auto></iron-ajax>
 
 
     
@@ -110,17 +109,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     
     <div class="container-desktop">
       
-<iron-pages id="ironPages" selected="-1">
-  <div class="loginSection">
-    
-    <h2>Login</h2>
-    <login-form lresponse="{{loginResponse}}"></login-form>
-  </div>
-  <div>
+
       <aproducts-page id="aproducts"></aproducts-page>
   </div>
 
-</iron-pages>
+
       
     
       
@@ -157,29 +150,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           },
           ImageContent: String,
           Image: String,
-          loginResponse: {
-            type: Number,
-            observer: '_loginResponseChanged'
-          },
-          adminSession: {
-            type: Number,
-            observer: '_adminSessionChanged'
-          }
-        },
-        _adminSessionChanged: function () {
-          if (this.adminSession == 1) {
-            this.$.ironPages.select(1);
-            this.$.addItemID.style.display = "block";
-          } else if (this.adminSession == 0) {
-            this.$.ironPages.select(0);
-            this.$.addItemID.style.display = "none";
-          }
-        },
-        _loginResponseChanged: function () {
-          if (this.loginResponse == 1) {
-            this.$.ironPages.select(1);
-            this.$.addItemID.style.display = "block";
-          }
+
         },
         _cartResponseChanged: function () {
           this.$.addItemToast.open();

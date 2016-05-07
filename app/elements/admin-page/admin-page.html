@@ -37,30 +37,42 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
     </style>
     
-     <paper-tabs selected="{{selected}}">
-      <paper-tab>Products</paper-tab>
-      <paper-tab>Blog</paper-tab>
-      <paper-tab>Misc Content</paper-tab>
-    </paper-tabs>   
-    <div class="container-desktop">
+    
+        <iron-ajax id="checkAdminSessionAjax" url="https://lasallepub.com/scripts/check-admin-session.php" last-response="{{adminSession}}" auto></iron-ajax>
+<div class="container-desktop">
+  <iron-pages id="ironPages" selected="-1">
+  <div class="loginSection">
+    
+    <h2>Login</h2>
+    <login-form lresponse="{{loginResponse}}"></login-form>
+  </div>
+  <div>
+      
       
 
     
+     <paper-tabs selected="{{selected}}">
+      <paper-tab>Products</paper-tab>
+      <paper-tab>Misc Content</paper-tab>
+    </paper-tabs>   
     
+ 
     <iron-pages selected="{{selected}}">
       <div>
         
         <admin-products></admin-products>
         
       </div>
-      <div>Two</div>
       <div>
         <admin-misc></admin-misc>
       </div>
     </iron-pages>
 
-    </div>
-    
+  
+         
+  </div>
+  </div>
+</iron-pages> 
     
 
    
@@ -78,10 +90,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             type: Array,
             notify: true,
           },
+          loginResponse: {
+            type: Number,
+            observer: '_loginResponseChanged'
+          },
+          adminSession: {
+            type: Number,
+            observer: '_adminSessionChanged'
+          }
         },
         attached: function () {
-          this.selected = 2;
-        }
+          this.selected = 0;
+        },
+        _adminSessionChanged: function () {
+          if (this.adminSession == 1) {
+            this.$.ironPages.select(1);
+            this.$.addItemID.style.display = "block";
+          } else if (this.adminSession == 0) {
+            this.$.ironPages.select(0);
+            this.$.addItemID.style.display = "none";
+          }
+        },
+        _loginResponseChanged: function () {
+          if (this.loginResponse == 1) {
+            this.$.ironPages.select(1);
+            this.$.addItemID.style.display = "block";
+          }
+        },        
       });
     })();
   </script>
