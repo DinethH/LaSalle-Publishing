@@ -58,12 +58,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       max-width: 1200px;
       margin: 0 auto;
     }
-    p {
+    p, .content {
       font-size: 20px;
     line-height: 30px;
     }
     
     </style>
+<iron-ajax auto url="https://lasallepub.com/scripts/get-static-content.php?q=contentAbout" last-response="{{contentAbout}}"></iron-ajax>
     
   <div class="header-image">
     
@@ -75,10 +76,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </div>
   </div>
   
-  <div class="container-desktop" s>
-    <p>
-      LaSalle is a publishing company dedicated to making things such as learning a musical instrument, science topics like physics or chemistry and math less complicated. Bringing you books and videos that will show you what we believe to be the most efficient way to learn. You can incorporate our materials as a study aid to school studies or use in hobby time.  
-    </p>
+  <div id="container" class="container-desktop content">
+    <!-- content -->
   </div>
 
    
@@ -95,7 +94,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           items: {
             type: Array,
             notify: true,
-          }
+          },
+          contentAbout: {
+            observer: '_contentAboutChanged'
+          },
+          contentAboutHTML: String
+        },
+
+        _contentAboutChanged: function (newValue, oldValue) {
+          this.contentAboutHTML = this.contentAbout;
+          document.getElementById("container").innerHTML = this.contentAboutHTML;
         },
 
         ready: function() {

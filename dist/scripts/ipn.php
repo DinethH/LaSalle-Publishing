@@ -108,11 +108,10 @@ if (strcmp ($res, "VERIFIED") == 0) {
             
             
             $mail = new SimpleMail();
-            $mail->setTo($receiver_email, $receiver_email)
+            $mail->setTo($payer_email, $payer_email)
                  ->setSubject("LaSallePub Order # $custom")
                  ->setFrom("no-reply@lasallepub.com", "No-Reply")
                  ->addMailHeader('Reply-To', "no-reply@lasallepub.com", "No-Reply")
-                 ->addMailHeader('Bcc', 'dineth@sachintha.com', 'dineth@sachintha.com')
                  ->addGenericHeader('X-Mailer', 'PHP/' . phpversion())
                  ->addGenericHeader('Content-Type', 'text/html; charset="utf-8"')
                  ->setMessage($message)

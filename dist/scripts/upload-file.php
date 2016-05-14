@@ -19,8 +19,9 @@ if (!empty($_FILES)) {
         $_SESSION['ebook'] = $cover;
     } else if ($type == 'video') {
         $_SESSION['video'] = $cover;
-    }
-    
+    } else if ($type == 'zip') {
+        $_SESSION['zip'] = $cover;
+    }    
     
 
 }
@@ -34,6 +35,8 @@ if ($type == 'cover') {
     $target_file = $target_dir . $_SESSION['ebook'];
 } else if ($type == 'video') {
     $target_file = $target_dir . $_SESSION['video'];
+} else if ($type == 'zip') {
+    $target_file = $target_dir . $_SESSION['zip'];
 }
 
 

@@ -18696,6 +18696,11 @@ iron-pages:after {
     </style>
     
 
+
+<iron-ajax auto="" url="https://lasallepub.com/scripts/get-static-content.php?q=slideTitle1" last-response="{{slideTitle1}}"></iron-ajax>
+<iron-ajax auto="" url="https://lasallepub.com/scripts/get-static-content.php?q=slideTitle2" last-response="{{slideTitle2}}"></iron-ajax>
+<iron-ajax auto="" url="https://lasallepub.com/scripts/get-static-content.php?q=slideTitle3" last-response="{{slideTitle3}}"></iron-ajax>
+
  
  <div class="layout vertical home-wrapper">
    
@@ -18707,7 +18712,7 @@ iron-pages:after {
               <div class="layout vertical tag-wrapper">
                 <div class="flex"></div>
                 <div class="home-header">
-                  <h2>Learn to play guitar in 30 days or your money back and keep the purchase!</h2>
+                  <h2>{{slideTitle1}}</h2>
                 </div>
               </div>
             </neon-animated-pages>
@@ -18719,7 +18724,7 @@ iron-pages:after {
               <div class="layout vertical tag-wrapper">
                 <div class="flex"></div>
                 <div class="home-header">
-                  <h2>Learn to play guitar in 30 days or your money back and keep the purchase!</h2>
+                  <h2>{{slideTitle2}}</h2>
                 </div>
               </div>
             </neon-animated-pages>
@@ -18731,7 +18736,7 @@ iron-pages:after {
               <div class="layout vertical tag-wrapper">
                 <div class="flex"></div>
                 <div class="home-header">
-                  <h2>Learn to play guitar in 30 days or your money back and keep the purchase!</h2>
+                  <h2>{{slideTitle3}}</h2>
                 </div>
               </div>
             </neon-animated-pages>
@@ -18831,12 +18836,13 @@ iron-pages:after {
       max-width: 1200px;
       margin: 0 auto;
     }
-    p {
+    p, .content {
       font-size: 20px;
     line-height: 30px;
     }
     
     </style>
+<iron-ajax auto="" url="https://lasallepub.com/scripts/get-static-content.php?q=contentAbout" last-response="{{contentAbout}}"></iron-ajax>
     
   <div class="header-image">
     
@@ -18848,10 +18854,8 @@ iron-pages:after {
     </div>
   </div>
   
-  <div class="container-desktop" s="">
-    <p>
-      LaSalle is a publishing company dedicated to making things such as learning a musical instrument, science topics like physics or chemistry and math less complicated. Bringing you books and videos that will show you what we believe to be the most efficient way to learn. You can incorporate our materials as a study aid to school studies or use in hobby time.  
-    </p>
+  <div id="container" class="container-desktop content">
+    
   </div>
 
    
@@ -18868,7 +18872,16 @@ iron-pages:after {
           items: {
             type: Array,
             notify: true,
-          }
+          },
+          contentAbout: {
+            observer: '_contentAboutChanged'
+          },
+          contentAboutHTML: String
+        },
+
+        _contentAboutChanged: function (newValue, oldValue) {
+          this.contentAboutHTML = this.contentAbout;
+          document.getElementById("container").innerHTML = this.contentAboutHTML;
         },
 
         ready: function() {
@@ -18926,12 +18939,14 @@ iron-pages:after {
       max-width: 1200px;
       margin: 0 auto;
     }
-    p {
+    p, .content {
       font-size: 20px;
     line-height: 30px;
     }
     
     </style>
+<iron-ajax auto="" url="https://lasallepub.com/scripts/get-static-content.php?q=contentSupport" last-response="{{contentSupport}}"></iron-ajax>
+
     
   <div class="header-image">
     
@@ -18943,21 +18958,8 @@ iron-pages:after {
     </div>
   </div>
   
-  <div class="container-desktop">
-    <div class="paras">
-        <p class="first">
-      THANK YOU for partnering with LaSalle Publishing in their mission to make sure complicated things are made simple!  
-    </p>
+  <div id="containerS" class="container-desktop content">
     
-    <p>
-      We need your support for many upcoming speaking/musical engagements and products in development. Please consider partnering with LaSalle Publishing’s Support Team on a monthly basis with a recurring donation in any amount. To know exactly how your funds are being used, updates on new projects or an address to send a check or money order, please don’t hesitate to email <a href="mailto:info@lasallepub.com">info@lasallepub.com</a>  
-    </p>
-    
-    <p>When you choose to partner with us, you will receive new product samples, special partner-only event invites and a special newsletter detailing all the progress made.  </p>
-    <p>By the way, we really want to know who you are! After donating please send us a quick email letting us know who you are so we can connect with you. </p>
-    <p>We are beyond grateful for your support and every gift matters no matter how great or how small. What we do would not be possible without your contributions.  </p>
-  
-    </div>
   </div>
 
    
@@ -18974,9 +18976,18 @@ iron-pages:after {
           items: {
             type: Array,
             notify: true,
-          }
+          },
+          contentSupport: {
+            observer: '_contentSupportChanged'
+          },
+          contentSupportHTML: String
         },
 
+        _contentSupportChanged: function (contentSupport, oldValue) {
+          this.contentSupportHTML = this.contentSupport;
+          document.getElementById("containerS").innerHTML = this.contentSupportHTML;
+        },
+        
         ready: function() {
          
         }
@@ -24124,6 +24135,629 @@ is separate from validation, and `allowed-pattern` does not affect how the input
     })();
   </script>
 </dom-module>
+<script>
+
+  /**
+   * `Polymer.IronMenubarBehavior` implements accessible menubar behavior.
+   *
+   * @polymerBehavior Polymer.IronMenubarBehavior
+   */
+  Polymer.IronMenubarBehaviorImpl = {
+
+    hostAttributes: {
+      'role': 'menubar'
+    },
+
+    keyBindings: {
+      'left': '_onLeftKey',
+      'right': '_onRightKey'
+    },
+
+    _onUpKey: function(event) {
+      this.focusedItem.click();
+      event.detail.keyboardEvent.preventDefault();
+    },
+
+    _onDownKey: function(event) {
+      this.focusedItem.click();
+      event.detail.keyboardEvent.preventDefault();
+    },
+
+    get _isRTL() {
+      return window.getComputedStyle(this)['direction'] === 'rtl';
+    },
+
+    _onLeftKey: function(event) {
+      if (this._isRTL) {
+        this._focusNext();
+      } else {
+        this._focusPrevious();
+      }
+      event.detail.keyboardEvent.preventDefault();
+    },
+
+    _onRightKey: function(event) {
+      if (this._isRTL) {
+        this._focusPrevious();
+      } else {
+        this._focusNext();
+      }
+      event.detail.keyboardEvent.preventDefault();
+    },
+
+    _onKeydown: function(event) {
+      if (this.keyboardEventMatchesKeys(event, 'up down left right esc')) {
+        return;
+      }
+
+      // all other keys focus the menu item starting with that character
+      this._focusWithKeyboardEvent(event);
+    }
+
+  };
+
+  /** @polymerBehavior Polymer.IronMenubarBehavior */
+  Polymer.IronMenubarBehavior = [
+    Polymer.IronMenuBehavior,
+    Polymer.IronMenubarBehaviorImpl
+  ];
+
+</script>
+<iron-iconset-svg name="paper-tabs" size="24">
+<svg><defs>
+<g id="chevron-left"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"></path></g>
+<g id="chevron-right"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"></path></g>
+</defs></svg>
+</iron-iconset-svg>
+
+
+<dom-module id="paper-tab" assetpath="../bower_components/paper-tabs/">
+  <template>
+    <style>
+      :host {
+        @apply(--layout-inline);
+        @apply(--layout-center);
+        @apply(--layout-center-justified);
+        @apply(--layout-flex-auto);
+
+        position: relative;
+        padding: 0 12px;
+        overflow: hidden;
+        cursor: pointer;
+
+        @apply(--paper-font-common-base);
+        @apply(--paper-tab);
+      }
+
+      :host(:focus) {
+        outline: none;
+      }
+
+      :host([link]) {
+        padding: 0;
+      }
+
+      .tab-content {
+        height: 100%;
+        transform: translateZ(0);
+          -webkit-transform: translateZ(0);
+        transition: opacity 0.1s cubic-bezier(0.4, 0.0, 1, 1);
+        @apply(--layout-horizontal);
+        @apply(--layout-center-center);
+        @apply(--layout-flex-auto);
+        @apply(--paper-tab-content);
+      }
+
+      :host(:not(.iron-selected)) > .tab-content {
+        opacity: 0.8;
+
+        @apply(--paper-tab-content-unselected);
+      }
+
+      :host(:focus) .tab-content {
+        opacity: 1;
+        font-weight: 700;
+      }
+
+      paper-ripple {
+        color: var(--paper-tab-ink, --paper-yellow-a100);
+      }
+
+      .tab-content > ::content > a {
+        @apply(--layout-flex-auto)
+
+        height: 100%;
+      }
+    </style>
+
+    <div class="tab-content">
+      <content></content>
+    </div>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'paper-tab',
+
+      behaviors: [
+        Polymer.IronControlState,
+        Polymer.IronButtonState,
+        Polymer.PaperRippleBehavior
+      ],
+
+      hostAttributes: {
+        role: 'tab'
+      },
+
+      listeners: {
+        down: '_updateNoink'
+      },
+
+      attached: function() {
+        this._updateNoink();
+      },
+
+      get _parentNoink () {
+        var parent = Polymer.dom(this).parentNode;
+        return !!parent && !!parent.noink;
+      },
+
+      _updateNoink: function() {
+        this.noink = !!this.noink || !!this._parentNoink;
+      }
+    });
+  </script>
+</dom-module>
+
+
+<dom-module id="paper-tabs" assetpath="../bower_components/paper-tabs/">
+  <template>
+    <style>
+      :host {
+        @apply(--layout);
+        @apply(--layout-center);
+
+        height: 48px;
+        font-size: 14px;
+        font-weight: 500;
+        overflow: hidden;
+          -moz-user-select: none;
+          -ms-user-select: none;
+          -webkit-user-select: none;
+        user-select: none;
+
+        /* NOTE: Both values are needed, since some phones require the value to be `transparent`. */
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+        -webkit-tap-highlight-color: transparent;
+
+        @apply(--paper-tabs);
+      }
+
+      :host-context([dir=rtl]) {
+        @apply(--layout-horizontal-reverse);
+      }
+
+      #tabsContainer {
+        position: relative;
+        height: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        @apply(--layout-flex-auto);
+      }
+
+      #tabsContent {
+        height: 100%;
+        -moz-flex-basis: auto;
+        -ms-flex-basis: auto;
+        flex-basis: auto;
+      }
+
+      #tabsContent.scrollable {
+        position: absolute;
+        white-space: nowrap;
+      }
+
+      #tabsContent.horizontal {
+        @apply(--layout-horizontal);
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      .not-visible {
+        opacity: 0;
+        cursor: default;
+      }
+
+      paper-icon-button {
+        width: 48px;
+        height: 48px;
+        padding: 12px;
+        margin: 0 4px;
+      }
+
+      #selectionBar {
+        position: absolute;
+        height: 2px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background-color: var(--paper-tabs-selection-bar-color, --paper-yellow-a100);
+          -webkit-transform: scale(0);
+        transform: scale(0);
+          -webkit-transform-origin: left center;
+        transform-origin: left center;
+          transition: -webkit-transform;
+        transition: transform;
+
+        @apply(--paper-tabs-selection-bar);
+      }
+
+      #selectionBar.align-bottom {
+        top: 0;
+        bottom: auto;
+      }
+
+      #selectionBar.expand {
+        transition-duration: 0.15s;
+        transition-timing-function: cubic-bezier(0.4, 0.0, 1, 1);
+      }
+
+      #selectionBar.contract {
+        transition-duration: 0.18s;
+        transition-timing-function: cubic-bezier(0.0, 0.0, 0.2, 1);
+      }
+
+      #tabsContent > ::content > *:not(#selectionBar) {
+        height: 100%;
+      }
+    </style>
+
+    <paper-icon-button icon="paper-tabs:chevron-left" class$="[[_computeScrollButtonClass(_leftHidden, scrollable, hideScrollButtons)]]" on-up="_onScrollButtonUp" on-down="_onLeftScrollButtonDown" tabindex="-1"></paper-icon-button>
+
+    <div id="tabsContainer" on-track="_scroll" on-down="_down">
+      <div id="tabsContent" class$="[[_computeTabsContentClass(scrollable)]]">
+        <content select="*"></content>
+        <div id="selectionBar" class$="[[_computeSelectionBarClass(noBar, alignBottom)]]" on-transitionend="_onBarTransitionEnd"></div>
+      </div>
+    </div>
+
+    <paper-icon-button icon="paper-tabs:chevron-right" class$="[[_computeScrollButtonClass(_rightHidden, scrollable, hideScrollButtons)]]" on-up="_onScrollButtonUp" on-down="_onRightScrollButtonDown" tabindex="-1"></paper-icon-button>
+
+  </template>
+
+  <script>
+    Polymer({
+      is: 'paper-tabs',
+
+      behaviors: [
+        Polymer.IronResizableBehavior,
+        Polymer.IronMenubarBehavior
+      ],
+
+      properties: {
+        /**
+         * If true, ink ripple effect is disabled. When this property is changed,
+         * all descendant `<paper-tab>` elements have their `noink` property
+         * changed to the new value as well.
+         */
+        noink: {
+          type: Boolean,
+          value: false,
+          observer: '_noinkChanged'
+        },
+
+        /**
+         * If true, the bottom bar to indicate the selected tab will not be shown.
+         */
+        noBar: {
+          type: Boolean,
+          value: false
+        },
+
+        /**
+         * If true, the slide effect for the bottom bar is disabled.
+         */
+        noSlide: {
+          type: Boolean,
+          value: false
+        },
+
+        /**
+         * If true, tabs are scrollable and the tab width is based on the label width.
+         */
+        scrollable: {
+          type: Boolean,
+          value: false
+        },
+
+        /**
+         * If true, dragging on the tabs to scroll is disabled.
+         */
+        disableDrag: {
+          type: Boolean,
+          value: false
+        },
+
+        /**
+         * If true, scroll buttons (left/right arrow) will be hidden for scrollable tabs.
+         */
+        hideScrollButtons: {
+          type: Boolean,
+          value: false
+        },
+
+        /**
+         * If true, the tabs are aligned to bottom (the selection bar appears at the top).
+         */
+        alignBottom: {
+          type: Boolean,
+          value: false
+        },
+
+        selectable: {
+          type: String,
+          value: 'paper-tab'
+        },
+
+        _step: {
+          type: Number,
+          value: 10
+        },
+
+        _holdDelay: {
+          type: Number,
+          value: 1
+        },
+
+        _leftHidden: {
+          type: Boolean,
+          value: false
+        },
+
+        _rightHidden: {
+          type: Boolean,
+          value: false
+        },
+
+        _previousTab: {
+          type: Object
+        }
+      },
+
+      hostAttributes: {
+        role: 'tablist'
+      },
+
+      listeners: {
+        'iron-resize': '_onTabSizingChanged',
+        'iron-items-changed': '_onTabSizingChanged',
+        'iron-select': '_onIronSelect',
+        'iron-deselect': '_onIronDeselect'
+      },
+
+      created: function() {
+        this._holdJob = null;
+      },
+
+      ready: function() {
+        this.setScrollDirection('y', this.$.tabsContainer);
+      },
+
+      _noinkChanged: function(noink) {
+        var childTabs = Polymer.dom(this).querySelectorAll('paper-tab');
+        childTabs.forEach(noink ? this._setNoinkAttribute : this._removeNoinkAttribute);
+      },
+
+      _setNoinkAttribute: function(element) {
+        element.setAttribute('noink', '');
+      },
+
+      _removeNoinkAttribute: function(element) {
+        element.removeAttribute('noink');
+      },
+
+      _computeScrollButtonClass: function(hideThisButton, scrollable, hideScrollButtons) {
+        if (!scrollable || hideScrollButtons) {
+          return 'hidden';
+        }
+
+        if (hideThisButton) {
+          return 'not-visible';
+        }
+
+        return '';
+      },
+
+      _computeTabsContentClass: function(scrollable) {
+        return scrollable ? 'scrollable' : 'horizontal';
+      },
+
+      _computeSelectionBarClass: function(noBar, alignBottom) {
+        if (noBar) {
+          return 'hidden';
+        } else if (alignBottom) {
+          return 'align-bottom';
+        }
+
+        return '';
+      },
+
+      // TODO(cdata): Add `track` response back in when gesture lands.
+
+      _onTabSizingChanged: function() {
+        this.debounce('_onTabSizingChanged', function() {
+          this._scroll();
+          this._tabChanged(this.selectedItem);
+        }, 10);
+      },
+
+      _onIronSelect: function(event) {
+        this._tabChanged(event.detail.item, this._previousTab);
+        this._previousTab = event.detail.item;
+        this.cancelDebouncer('tab-changed');
+      },
+
+      _onIronDeselect: function(event) {
+        this.debounce('tab-changed', function() {
+          this._tabChanged(null, this._previousTab);
+        // See polymer/polymer#1305
+        }, 1);
+      },
+
+      get _tabContainerScrollSize () {
+        return Math.max(
+          0,
+          this.$.tabsContainer.scrollWidth -
+            this.$.tabsContainer.offsetWidth
+        );
+      },
+
+
+      _scroll: function(e, detail) {
+        if (!this.scrollable) {
+          return;
+        }
+
+        var ddx = (detail && -detail.ddx) || 0;
+        this._affectScroll(ddx);
+      },
+
+      _down: function(e) {
+        // go one beat async to defeat IronMenuBehavior
+        // autorefocus-on-no-selection timeout
+        this.async(function() {
+          if (this._defaultFocusAsync) {
+            this.cancelAsync(this._defaultFocusAsync);
+            this._defaultFocusAsync = null;
+          }
+        }, 1);
+      },
+
+      _affectScroll: function(dx) {
+        this.$.tabsContainer.scrollLeft += dx;
+
+        var scrollLeft = this.$.tabsContainer.scrollLeft;
+
+        this._leftHidden = scrollLeft === 0;
+        this._rightHidden = scrollLeft === this._tabContainerScrollSize;
+      },
+
+      _onLeftScrollButtonDown: function() {
+        this._scrollToLeft();
+        this._holdJob = setInterval(this._scrollToLeft.bind(this), this._holdDelay);
+      },
+
+      _onRightScrollButtonDown: function() {
+        this._scrollToRight();
+        this._holdJob = setInterval(this._scrollToRight.bind(this), this._holdDelay);
+      },
+
+      _onScrollButtonUp: function() {
+        clearInterval(this._holdJob);
+        this._holdJob = null;
+      },
+
+      _scrollToLeft: function() {
+        this._affectScroll(-this._step);
+      },
+
+      _scrollToRight: function() {
+        this._affectScroll(this._step);
+      },
+
+      _tabChanged: function(tab, old) {
+        if (!tab) {
+          this._positionBar(0, 0);
+          return;
+        }
+
+        var r = this.$.tabsContent.getBoundingClientRect();
+        var w = r.width;
+        var tabRect = tab.getBoundingClientRect();
+        var tabOffsetLeft = tabRect.left - r.left;
+
+        this._pos = {
+          width: this._calcPercent(tabRect.width, w),
+          left: this._calcPercent(tabOffsetLeft, w)
+        };
+
+        if (this.noSlide || old == null) {
+          // position bar directly without animation
+          this._positionBar(this._pos.width, this._pos.left);
+          return;
+        }
+
+        var oldRect = old.getBoundingClientRect();
+        var oldIndex = this.items.indexOf(old);
+        var index = this.items.indexOf(tab);
+        var m = 5;
+
+        // bar animation: expand
+        this.$.selectionBar.classList.add('expand');
+
+        var moveRight = oldIndex < index;
+        var isRTL = this._isRTL;
+        if (isRTL) {
+          moveRight = !moveRight;
+        }
+
+        if (moveRight) {
+          this._positionBar(this._calcPercent(tabRect.left + tabRect.width - oldRect.left, w) - m,
+              this._left);
+        } else {
+          this._positionBar(this._calcPercent(oldRect.left + oldRect.width - tabRect.left, w) - m,
+              this._calcPercent(tabOffsetLeft, w) + m);
+        }
+
+        if (this.scrollable) {
+          this._scrollToSelectedIfNeeded(tabRect.width, tabOffsetLeft);
+        }
+      },
+
+      _scrollToSelectedIfNeeded: function(tabWidth, tabOffsetLeft) {
+        var l = tabOffsetLeft - this.$.tabsContainer.scrollLeft;
+        if (l < 0) {
+          this.$.tabsContainer.scrollLeft += l;
+        } else {
+          l += (tabWidth - this.$.tabsContainer.offsetWidth);
+          if (l > 0) {
+            this.$.tabsContainer.scrollLeft += l;
+          }
+        }
+      },
+
+      _calcPercent: function(w, w0) {
+        return 100 * w / w0;
+      },
+
+      _positionBar: function(width, left) {
+        width = width || 0;
+        left = left || 0;
+
+        this._width = width;
+        this._left = left;
+        this.transform(
+            'translate3d(' + left + '%, 0, 0) scaleX(' + (width / 100) + ')',
+            this.$.selectionBar);
+      },
+
+      _onBarTransitionEnd: function(e) {
+        var cl = this.$.selectionBar.classList;
+        // bar animation: expand -> contract
+        if (cl.contains('expand')) {
+          cl.remove('expand');
+          cl.add('contract');
+          this._positionBar(this._pos.width, this._pos.left);
+        // bar animation done
+        } else if (cl.contains('contract')) {
+          cl.remove('contract');
+        }
+      }
+    });
+  </script>
+</dom-module>
 
 
 <dom-module id="iron-autogrow-textarea" assetpath="../bower_components/iron-autogrow-textarea/">
@@ -25781,7 +26415,7 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
   });
 
 </script>
-<dom-module id="admin-page" assetpath="admin-page/">
+<dom-module id="admin-products" assetpath="admin-products/">
   <template>
     <style>
       :host {
@@ -25839,7 +26473,6 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
     </style>
     
     
-    <iron-ajax id="checkAdminSessionAjax" url="https://lasallepub.com/scripts/check-admin-session.php" last-response="{{adminSession}}" auto=""></iron-ajax>
 
 
     
@@ -25853,8 +26486,9 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
           <paper-input type="number" label="Price" value="{{price}}"></paper-input>
           
           <file-upload target="https://lasallepub.com/scripts/upload-file.php?type=cover" method="POST">Cover</file-upload>
+
           <file-upload target="https://lasallepub.com/scripts/upload-file.php?type=ebook" method="POST">eBook</file-upload>
-          <file-upload target="https://lasallepub.com/scripts/upload-file.php?type=video" method="POST">Video</file-upload>
+          <file-upload target="https://lasallepub.com/scripts/upload-file.php?type=zip" method="POST">Zip (Video + eBook)</file-upload>
     
           
     
@@ -25868,23 +26502,17 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
     
     <div class="container-desktop">
       
-<iron-pages id="ironPages" selected="-1">
-  <div class="loginSection">
-    
-    <h2>Login</h2>
-    <login-form lresponse="{{loginResponse}}"></login-form>
-  </div>
-  <div>
+
       <aproducts-page id="aproducts"></aproducts-page>
   </div>
 
-</iron-pages>
+
       
     
       
 
       
-    </div>
+    
     
     <paper-fab id="addItemID" on-click="addItemDialogToggle" icon="add"></paper-fab>
     
@@ -25903,7 +26531,7 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
       'use strict';
 
       Polymer({
-        is: 'admin-page',
+        is: 'admin-products',
 
         properties: {
           items: {
@@ -25915,29 +26543,7 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
           },
           ImageContent: String,
           Image: String,
-          loginResponse: {
-            type: Number,
-            observer: '_loginResponseChanged'
-          },
-          adminSession: {
-            type: Number,
-            observer: '_adminSessionChanged'
-          }
-        },
-        _adminSessionChanged: function () {
-          if (this.adminSession == 1) {
-            this.$.ironPages.select(1);
-            this.$.addItemID.style.display = "block";
-          } else if (this.adminSession == 0) {
-            this.$.ironPages.select(0);
-            this.$.addItemID.style.display = "none";
-          }
-        },
-        _loginResponseChanged: function () {
-          if (this.loginResponse == 1) {
-            this.$.ironPages.select(1);
-            this.$.addItemID.style.display = "block";
-          }
+
         },
         _cartResponseChanged: function () {
           this.$.addItemToast.open();
@@ -25958,6 +26564,236 @@ The `aria-labelledby` attribute will be set to the header element, if one exists
         },
         addItemDialogToggle: function () {
           this.$.addItemDialog.open();
+        }
+      });
+    })();
+  </script>
+</dom-module>
+<dom-module id="admin-misc" assetpath="admin-misc/">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      
+    .container-desktop {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    h4 {
+      margin-bottom: 0;
+      margin-top: 20px;
+    }
+    
+    .card {
+      box-shadow: 1px 1px 5px #ccc;
+      margin: 20px;
+      padding: 20px;
+    }
+    
+    .instructions {
+      background: rgba(250, 150, 150, 0.3);
+      border-radius: 5;
+      padding: 15px;
+    }
+    
+    </style>
+    
+    <iron-ajax id="getMiscContent" url="https://lasallepub.com/scripts/get-misc-content.php" last-response="{{miscData}}" auto=""></iron-ajax>
+    
+    <iron-ajax id="saveMiscContent" url="https://lasallepub.com/scripts/save-misc-content.php?subtitle={{miscData.subtitle}}&amp;
+    slidetitle1={{miscData.slidetitle1}}&amp;slidetitle2={{miscData.slidetitle2}}&amp;slidetitle3={{miscData.slidetitle3}}&amp;
+    instragram={{miscData.instragram}}&amp;twitter={{miscData.twitter}}&amp;facebook={{miscData.facebook}}&amp;
+    supportContent={{miscData.supportContent}}&amp;aboutContent={{miscData.aboutContent}}" last-response="{{miscDataSavedResponse}}" auto=""></iron-ajax>
+
+    
+    <div class="container-desktop">
+      
+      <div class="card">
+        <h4>Subtitle</h4>
+      
+        <paper-input char-counter="" type="text" label="Subtitle" value="{{miscData.subtitle}}"></paper-input>
+        
+       
+      </div>
+      
+      <div class="card">
+        <h4>Slide Titles</h4>
+        
+        <paper-input char-counter="" type="text" label="Slide Title 1" value="{{miscData.slidetitle1}}"></paper-input>
+        <paper-input char-counter="" type="text" label="Slide Title 2" value="{{miscData.slidetitle2}}"></paper-input>
+        <paper-input char-counter="" type="text" label="Slide Title 3" value="{{miscData.slidetitle3}}"></paper-input>        
+      </div>
+
+
+
+      <div class="card">
+        <h4>Social Media Links</h4>
+        <p class="instructions">Enter the complete url (including http://)<br>ex: http://www.google.com</p>
+        
+        <paper-input type="text" label="Instagram URL" value="{{miscData.instragram}}"></paper-input>
+        <paper-input type="text" label="Twitter URL" value="{{miscData.twitter}}"></paper-input>
+        <paper-input type="text" label="Facebook URL" value="{{miscData.facebook}}"></paper-input>
+        
+                
+      </div>
+
+      
+      <div class="card">
+        <h4>Page Content</h4>
+        <p class="instructions">To add a new paragraph, simply wrap the text inside a &lt;p&gt;&lt;/p&gt; tag. <br>
+        ex: <code>&lt;p&gt;Paragrap 1&lt;/p&gt;&lt;p&gt;Paragrap 2&lt;/p&gt;</code></p>
+        
+        <paper-textarea rows="5" label="Support Page" value="{{miscData.supportContent}}"></paper-textarea>
+        
+        <br>
+        
+        <paper-textarea rows="5" label="About Page" value="{{miscData.aboutContent}}"></paper-textarea>
+                 
+      </div>
+      
+       
+      <div class="layout horizontal end-justified">
+        <paper-button>
+         <iron-icon style="padding-right: 10px; padding-bottom: 3px;" icon="icons:save"></iron-icon>Save</paper-button>
+         
+      </div>
+    </div>
+
+   
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'admin-misc',
+
+        properties: {
+          items: {
+            type: Array,
+            notify: true,
+          }
+        }
+      });
+    })();
+  </script>
+</dom-module>
+<dom-module id="admin-page" assetpath="admin-page/">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+      
+    .container-desktop {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    paper-tabs {
+      --paper-tabs-selection-bar-color: #666;
+      --paper-tabs-selection-bar: #ccc;
+      --paper-tabs: #000;
+    }
+    </style>
+         <iron-ajax id="logoutAjax" url="https://lasallepub.com/scripts/logout.php" last-response="{{logoutResponse}}"></iron-ajax>
+   
+    
+        <iron-ajax id="checkAdminSessionAjax" url="https://lasallepub.com/scripts/check-admin-session.php" last-response="{{adminSession}}" auto=""></iron-ajax>
+<div class="container-desktop">
+  <iron-pages id="ironPages" selected="-1">
+  <div class="loginSection">
+    
+    <h2>Login</h2>
+    <login-form lresponse="{{loginResponse}}"></login-form>
+  </div>
+  <div>
+      
+      
+
+    
+<div class="layout horizontal">
+   <div class="flex">
+      
+       <paper-tabs selected="{{selected}}">
+      <paper-tab>Products</paper-tab>
+      <paper-tab>Misc Content</paper-tab>
+    </paper-tabs>  
+   </div>
+   <div>
+     <paper-button on-click="logout">Logout</paper-button>
+   </div>
+</div> 
+    
+ 
+    <iron-pages selected="{{selected}}">
+      <div>
+        
+        <admin-products></admin-products>
+        
+      </div>
+      <div>
+        <admin-misc></admin-misc>
+      </div>
+    </iron-pages>
+
+  
+         
+  </div>
+  </iron-pages></div>
+ 
+    
+
+   
+  </template>
+
+  <script>
+    (function() {
+      'use strict';
+
+      Polymer({
+        is: 'admin-page',
+
+        properties: {
+          items: {
+            type: Array,
+            notify: true,
+          },
+          loginResponse: {
+            type: Number,
+            observer: '_loginResponseChanged'
+          },
+          adminSession: {
+            type: Number,
+            observer: '_adminSessionChanged'
+          }
+        },
+        attached: function () {
+          this.selected = 0;
+        },
+        _adminSessionChanged: function () {
+          if (this.adminSession == 1) {
+            this.$.ironPages.select(1);
+            this.$.addItemID.style.display = "block";
+          } else if (this.adminSession == 0) {
+            this.$.ironPages.select(0);
+            this.$.addItemID.style.display = "none";
+          }
+        },
+        _loginResponseChanged: function () {
+          if (this.loginResponse == 1) {
+            this.$.ironPages.select(1);
+            this.$.addItemID.style.display = "block";
+          }
+        },     
+        logout: function () {
+          this.$.logoutAjax.generateRequest();
+          location.reload();
         }
       });
     })();
