@@ -36,7 +36,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       --paper-tabs: #000;
     }
     </style>
-    
+         <iron-ajax id="logoutAjax" url="https://lasallepub.com/scripts/logout.php" last-response="{{logoutResponse}}"></iron-ajax>
+   
     
         <iron-ajax id="checkAdminSessionAjax" url="https://lasallepub.com/scripts/check-admin-session.php" last-response="{{adminSession}}" auto></iron-ajax>
 <div class="container-desktop">
@@ -51,10 +52,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       
 
     
-     <paper-tabs selected="{{selected}}">
+<div class="layout horizontal">
+   <div class="flex">
+      
+       <paper-tabs selected="{{selected}}">
       <paper-tab>Products</paper-tab>
       <paper-tab>Misc Content</paper-tab>
-    </paper-tabs>   
+    </paper-tabs>  
+   </div>
+   <div>
+     <paper-button on-click="logout">Logout</paper-button>
+   </div>
+</div> 
     
  
     <iron-pages selected="{{selected}}">
@@ -116,7 +125,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             this.$.ironPages.select(1);
             this.$.addItemID.style.display = "block";
           }
-        },        
+        },     
+        logout: function () {
+          this.$.logoutAjax.generateRequest();
+          location.reload();
+        }
       });
     })();
   </script>
